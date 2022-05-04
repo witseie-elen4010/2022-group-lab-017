@@ -6,9 +6,5 @@
 #  Team organization
  
    Ntsemi Bophilo
-<<<<<<< HEAD
-   Mashingaidze Felix
-=======
    Thabang Sean Banyini
->>>>>>> 6bb202bda6e83023cc4f9bf7e5570e88740029ac
-
+   Felix Mashingadze
