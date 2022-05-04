@@ -5,6 +5,8 @@
 
 #  Team organization
  
-   Ntsemi Bophilo
-   Thabang Sean Banyini
-   Felix Mashingadze
+   Ntsemi Bophilo,
+   Thabang Sean Banyini,
+   Goodwill Phooko
+
+
