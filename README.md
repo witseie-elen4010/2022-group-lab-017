@@ -7,6 +7,6 @@
  
    Ntsemi Bophilo,
    Thabang Sean Banyini,
-   Goodwill Phooko
-
+   Goodwill Phooko,
+   Felix Mashingaidze,
 
