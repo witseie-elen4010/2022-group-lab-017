@@ -1,13 +1,13 @@
 
 #  ELEN4010 Group Lab 2022 
 
-#  Game development of Wordle++ 
+##  Name of Application: Wordle++ 
 
-#  Team organization
+##  Group Members
  
-   Ntsemi Bophilo,
-   Thabang Sean Banyini,
-   Goodwill Phooko,
-   Felix Mashingaidze,
-   Kevin Naidoo
+1. Ntsemi Bophilo
+2. Thabang Sean Banyini
+3. Goodwill Phooko
+4. Felix Mashingaidze
+5. Kevin Naidoo
 
