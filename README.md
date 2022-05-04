@@ -9,4 +9,5 @@
    Thabang Sean Banyini,
    Goodwill Phooko,
    Felix Mashingaidze,
+   Kevin Naidoo
 
