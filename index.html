@@ -1,51 +1,76 @@
+<!--
+Author: Colorlib
+Author URL: https://colorlib.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>WORDLE++</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="scripts.js" type="module"></script>
-    </head>
-    <body>
+<head>
+    <title>WORDLE++</title>
+    <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="login.css">
+    
+<!-- //web font -->
+</head>
+<body>
+    <div class="container">
+        <form class="form" id="login" method="POST" action="/login">
+            <h1 class="form__title">Login to Wordle++</h1>
 
-        <div id="game-board" class="game-board">
+            <div class="form__message form__message--error"></div>
 
-        </div>
-        <div class="keyboard">
-            <div class="row-1">
-                <button class="keyboard-button" id="Q">Q</button>
-                <button class="keyboard-button" id="W">W</button>
-                <button class="keyboard-button" id="E">E</button>
-                <button class="keyboard-button" id="R">R</button>
-                <button class="keyboard-button" id="T">T</button>
-                <button class="keyboard-button" id="Y">Y</button>
-                <button class="keyboard-button" id="U">U</button>
-                <button class="keyboard-button" id="I">I</button>
-                <button class="keyboard-button" id="O">O</button>
-                <button class="keyboard-button" id="P">P</button>
+            <div class="form__input-group">
+                <Input type="text" name="student_Id" class="form__input" autofocus placeholder="UserName"
+                    id="studentID">
+                <div class="form__input-error-message"> </div>
             </div>
-            <div class="row-2">
-                <button class="keyboard-button" id="A">A</button>
-                <button class="keyboard-button" id="S">S</button>
-                <button class="keyboard-button" id="D">D</button>
-                <button class="keyboard-button" id="F">F</button>
-                <button class="keyboard-button" id="G">G</button>
-                <button class="keyboard-button" id="H">H</button>
-                <button class="keyboard-button" id="J">J</button>
-                <button class="keyboard-button" id="K">K</button>
-                <button class="keyboard-button" id="L">L</button>
+
+            <div class="form__input-group">
+                <Input type="password" name="login_pass_word" class="form__input" autofocus placeholder="Password">
+                <div class="form__input-error-message"> </div>
             </div>
-            <div class="row-3">
-                <button class="keyboard-button" id="Enter">Enter</button>
-                <button class="keyboard-button" id="Z">Z</button>
-                <button class="keyboard-button" id="X">X</button>
-                <button class="keyboard-button" id="C">C</button>
-                <button class="keyboard-button" id="V">V</button>
-                <button class="keyboard-button" id="B">B</button>
-                <button class="keyboard-button" id="N">N</button>
-                <button class="keyboard-button" id="M">M</button>
-                <button class="keyboard-button" id="Del">Del</button>
+
+            <button class="form__button" id="signin" type="submit" onclick="document.location.href='Public/templates/keyboard.html'">Continue</button>
+
+        </form>
+        <br>
+        <button class="form__button" id="linkCreateAccount" type="submit">Create Account</button>
+        <form class="form form--hidden" id="createAccount" method="POST" action="/createaccount">
+            <h1 class="form__title">Create Account</h1>
+
+            <div class="form__message form__message--error"></div>
+
+            <div class="form__input-group">
+                <Input type="text" name="full_name" id='fullName' class="form__input" autofocus placeholder="Email">
+                <div class="form__input-error-message"> </div>
             </div>
-        </div>
-    </body>
+
+            <div class="form__input-group">
+                <Input type="text" name="user_name" id='signupUsername' class="form__input" autofocus
+                    placeholder="Username">
+                <div class="form__input-error-message"> </div>
+            </div>
+
+            <div class="form__input-group">
+                <Input type="password" name="pass_word" id="password" class="form__input" autofocus
+                    placeholder="Password">
+                <div class="form__input-error-message"> </div>
+            </div>
+
+            <div class="form__input-group">
+                <Input type="password" name="confirm_password" id="confrimPassword" class="form__input" autofocus
+                    placeholder="Confirm Password">
+                <div class="form__input-error-message"> </div>
+            </div>
+
+            <button class="form__button" id="signup" type="submit">Continue</button>
+
+        </form>
+        <br>
+        <button class="form__button" id="linkLogin" type="submit">Sign in</button>
+    </div>
+    <script src="login.js"></script>
+</body>
 </html>
