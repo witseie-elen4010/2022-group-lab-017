@@ -21,7 +21,13 @@ display: flex;
     justify-content: center;
     align-items: center;
   }
-
+  h1 {
+    padding: 25px;
+    text-align: center;
+    background: #1abc8b;
+    color: rgba(117, 22, 136, 0.774);
+    font-size: 25px;
+  }
 .keyboard {
     margin: 1rem 0;
     display: flex;
