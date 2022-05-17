@@ -1,4 +1,4 @@
-import { WORDS } from "/Project_code/public/scripts/words.js";
+import { WORDS } from "/static/public/scripts/words.js";
 
 const NUMBER_OF_GUESSES = 6;
 let guessesRemaining = NUMBER_OF_GUESSES;
@@ -11,7 +11,7 @@ console.log(rightGuessString)
 
 function initBoard(){
     let board = document.getElementById("game-board");
-    
+    console.log("Executing")
     for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
         let row = document.createElement("div")
         row.className = "letter-row"
@@ -24,8 +24,8 @@ function initBoard(){
 
         board.appendChild(row)
     }
-  }
-  initBoard();
+}
+initBoard();
 
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName("keyboard-button")) {

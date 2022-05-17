@@ -71,4 +71,21 @@ body {
     color: #49c1a2;
   }
   
-  
+  .form__button {
+    width:  70%;
+    padding: 1rem 2rem ;
+    margin-left: 20%;
+    margin-top: 3%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f5f6f5;
+    border: none;
+    border-radius: 25px; /*var(--border-radius) ;*/
+    outline: none;
+    cursor: pointer;
+    background: #21d002b4; /*var(--color-primary);*/
+}
+
+.form__button:active{
+    transform: scale(0.98); 
+}
