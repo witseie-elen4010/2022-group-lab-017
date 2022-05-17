@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>Login</title>
-    <link rel="stylesheet" href="./Project_code/public/css/signin_signup.css" />
+    <link rel="stylesheet" href="static/public/css/signin_signup.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
@@ -12,7 +12,7 @@
   <body>
     <div class="login-box">
       <h1>Login to Play Wordle++</h1>
-      <form>
+      <form id="login" method="POST" action="/signup">
         <label>Email</label>
         <input type="email" placeholder="" />
         <label>Password</label>
@@ -21,7 +21,7 @@
       </form>
     </div>
     <p class="para-2">
-      Don't have an account? <a href="./Project_code/views/signup.html">Sign Up Here</a>
+      Don't have an account? <a href="/register">Sign Up Here</a>
     </p>
   </body>
 </html>
