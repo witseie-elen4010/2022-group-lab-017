@@ -1,15 +1,22 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url(/Project_code/public/image/backg.jpg);
+  background-size: cover;
+}
 
-.game-board {
+h1 {
+    text-align: center;
+   }
+
+   .game-board {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
-
-.letter-row {
-display: flex;
-}
-
-.letter-box {
+  
+  .letter-box {
     border: 2px solid gray;
     border-radius: 3px;
     margin: 2px;
@@ -20,15 +27,18 @@ display: flex;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-transform: uppercase;
   }
-  h1 {
-    padding: 25px;
-    text-align: center;
-    background: #1abc8b;
-    color: rgba(117, 22, 136, 0.774);
-    font-size: 25px;
+  
+  .filled-box {
+    border: 2px solid black;
   }
-.keyboard {
+  
+  .letter-row {
+    display: flex;
+  }
+
+  .keyboard {
     margin: 1rem 0;
     display: flex;
     flex-direction: column;
@@ -38,8 +48,8 @@ display: flex;
   .keyboard div {
     display: flex;
   }
-
-  .second-row {
+  
+  .row-2 {
     margin: 0rem 0;
   }
   
@@ -50,8 +60,9 @@ display: flex;
     padding: 1rem;
     margin: 0 0px;
     cursor: pointer;
+    text-transform: uppercase;
   }
 
   .keyboard-button:hover, .keyboard-button:focus{
-    background-color: rgb(240, 148, 228);
+    background-color: peru;
   }
