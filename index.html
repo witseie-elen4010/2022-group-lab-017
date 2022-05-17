@@ -1,76 +1,28 @@
-<!--
-Author: Colorlib
-Author URL: https://colorlib.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 <!DOCTYPE html>
-<html>
-<head>
-    <title>WORDLE++</title>
-    <meta charset="UTF-8">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="login.css">
-    
-<!-- //web font -->
-</head>
-<body>
-    <div class="container">
-        <form class="form" id="login" method="POST" action="/login">
-            <h1 class="form__title">Login to Wordle++</h1>
-
-            <div class="form__message form__message--error"></div>
-
-            <div class="form__input-group">
-                <Input type="text" name="student_Id" class="form__input" autofocus placeholder="UserName"
-                    id="studentID">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <div class="form__input-group">
-                <Input type="password" name="login_pass_word" class="form__input" autofocus placeholder="Password">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <button class="form__button" id="signin" type="submit" onclick="document.location.href='Public/templates/keyboard.html'">Continue</button>
-
-        </form>
-        <br>
-        <button class="form__button" id="linkCreateAccount" type="submit">Create Account</button>
-        <form class="form form--hidden" id="createAccount" method="POST" action="/createaccount">
-            <h1 class="form__title">Create Account</h1>
-
-            <div class="form__message form__message--error"></div>
-
-            <div class="form__input-group">
-                <Input type="text" name="full_name" id='fullName' class="form__input" autofocus placeholder="Email">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <div class="form__input-group">
-                <Input type="text" name="user_name" id='signupUsername' class="form__input" autofocus
-                    placeholder="Username">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <div class="form__input-group">
-                <Input type="password" name="pass_word" id="password" class="form__input" autofocus
-                    placeholder="Password">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <div class="form__input-group">
-                <Input type="password" name="confirm_password" id="confrimPassword" class="form__input" autofocus
-                    placeholder="Confirm Password">
-                <div class="form__input-error-message"> </div>
-            </div>
-
-            <button class="form__button" id="signup" type="submit">Continue</button>
-
-        </form>
-        <br>
-        <button class="form__button" id="linkLogin" type="submit">Sign in</button>
+<html lang="en">
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="./Project_code/public/css/signin_signup.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=x4OxHRh4BNEHqP_48omYpL8WEOhcB5b8DhCslSsjBDounLar65g20_5_1apfo2pSVzIRlkCtOqPKzjMqdTmO8hWbY0cWroWlmhpW4D3vp4L2mNadt1O3cZxtR_nBIb7PahTSDom0kzI1YX5RxTVhwa8W7ThR7t817LOjOsxlSKUIxfUXDTx1oFaO-S1UOxbtfvLqgNQVaH4sLFRVBLwmRM3wuD5kJwShZB_ucZc96d7H_eJ33FlZMifKH9DJ-iJUHL9yewnBzvw3gJn2x2dp6YtkyR2JbGjMDGrC8JIe6a0ObSDeynI3IIxRBVU-61afMzDrEUlz86U6n9jGfUpIlIe_7-_RUhr_094K9zil1jR37qVLMjQ6wX0C5Vvl5iR79HPSjgIkKLc298mnv_ilaXD8uXXQ1CUkEftJ1pZjyff6Q__V51VfL0TM3SQR0wQIjhe2iOQpphzeIdCGlk6GZygSyeP790F3cxoRP1zS9Z8YBjE-NKhyNMCINJQV5PCM6uXfk1UnZwYOiISwwbXn2q-ucnCL6nCBYgLxLMlyywAwhkqwdZdw7-U6wSOAj73-muGWyYqlj3Mi-pODaOZZG5j9DxQf5DjpRK6TepkSrn5asxPr4ZZ_-7ELmGf1pRKvGJ6VCp19WXWqJMzgyQJYsSbLpheCxQ16wQ6QoD6n1PMWMTr9pm9E41pQpHR4xE4X_qXSIe0abVZZgo2kDQUVlfKe4IHmYGiX4npHPWUzXRB6agG8_I6LNSo8WeVy_QeGs9RHXWcEHAGYbhP_Odhi7vblMKd0pHL8yjxi9UqK92N7we6BJSmNoqoidlS-Ha4iLQSdFC_bgepwbPLOTeohX1f8CtvW7iwtq98AArdEe357xat1QW3gs3iyf35fCm9p2D0daoOSy9Mak5pbMaNaQwVCMyXOQP2WA-yYtXZ-BYBKXuLjqnBjxz-8JS1NeX_3QC_xpg4avn60u5bS_Q2BUf7QsAkLhlg0N-NFqs5qvle7CAPz-ReVPureECRWVUo4EV4hr79EdCAwBYk8BLVJWH6EqL_hfJj2sZvDdmFMTZWVRcYxIInap-WaF-CTqPa3RT1SlU7QWTHXje5N9CtHGzF0w5YqeZ-KugjH7VNl7keOfAF3A0hxtZavVHJGnGQ625Zu-C7dTRBtdupyyJ0JYoZ9vGZCtjmneTu-Jqrg9P-SpB8fQ1UqHhuEQz3H9v7J-24vSvbJcv9BH0nYJhELxMv16K2THOq2OnYg0giFeSddPoCYWWHpyP3aQJssPCmiFl1b_8XMgddnxFbtN_gJhuJ2M2YL5zay05ArXwS08KPgHF3IyEosbL4rmnnSkYt3EXlHUZu2_RvRJKamdXvMBV7i1vsQRMKS-IAI7IMHN8gIMSJ9-uhxP259Pofer-DhcTnAudGhm6Zue4IWQb0Daw" nonce="9d2dadeb9d9b8b93554431392d3c10f1" charset="UTF-8"></script></head>
+  <body>
+    <div class="login-box">
+      <h1>Login to Play Wordle++</h1>
+      <form>
+        <label>Email</label>
+        <input type="email" placeholder="" />
+        <label>Password</label>
+        <input type="password" placeholder="" />
+        <input type="button" value="Submit" />
+      </form>
     </div>
-    <script src="login.js"></script>
-</body>
+    <p class="para-2">
+      Don't have an account? <a href="./Project_code/views/signup.html">Sign Up Here</a>
+    </p>
+  </body>
 </html>
+
