@@ -14,9 +14,9 @@ for (let i = 0; i < 6; i++) {
   board.appendChild(row)
 }
 // ---------- Handling user Input ------------
-const numberOfguesses = 0
+let numberOfguesses = 0
 let nextLetter = 0
-const word = []
+let word = []
 
 document.querySelectorAll('.keyboard-button').forEach(item => {
   item.addEventListener('click', event => {
@@ -25,16 +25,16 @@ document.querySelectorAll('.keyboard-button').forEach(item => {
 
     // Check for deleting
     if (clickedLetter === 'Del') {
-      // erase a letter
-      DeleteLetter()
+      DeleteLetter() // erase a letter
     } else if (clickedLetter === 'Enter') {
       /// go to next line
+      checkGuesedWord() // Check inserted word
     } else {
-      insertLetter(clickedLetter)
-      console.log(item.innerHTML)
-      if (word.length < 5) { /// verify length is still less than five
+      if (word.length < 5 && numberOfguesses < 6) { /// verify length is still less than five
         console.log(word)
         word.push(clickedLetter)
+        insertLetter(clickedLetter)
+        console.log(item.innerHTML)
       }
     }
   })
@@ -59,4 +59,11 @@ function DeleteLetter () {
   }
   const box = row.children[nextLetter]
   box.textContent = ''
+}
+/// / checking for the correct word
+function checkGuesedWord () {
+  if (numberOfguesses < 6) numberOfguesses += 1
+  nextLetter = 0
+  word = []
+  /// Implement te function for searching the correct word
 }
