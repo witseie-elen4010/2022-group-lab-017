@@ -26,6 +26,7 @@ document.querySelectorAll('.keyboard-button').forEach(item => {
     // Check for deleting
     if (clickedLetter === 'Del') {
       // erase a letter
+      DeleteLetter()
     } else if (clickedLetter === 'Enter') {
       /// go to next line
     } else {
@@ -45,4 +46,17 @@ function insertLetter (letter) {
   box.textContent = letter
   box.classList.add('filled-box')
   nextLetter += 1
+}
+/// Handling for delete
+function DeleteLetter () {
+  const row = document.getElementsByClassName('letter-row')[numberOfguesses]
+
+  if (nextLetter !== 0) {
+    nextLetter -= 1
+    word.pop()
+  } else { /// taking care of the deleteing at first block to avoid errors
+    nextLetter = 0
+  }
+  const box = row.children[nextLetter]
+  box.textContent = ''
 }
