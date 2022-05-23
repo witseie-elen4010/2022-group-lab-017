@@ -17,7 +17,7 @@ h1 {
   }
   
 .letter-box {
-    border: 2px solid gray;
+    border: 2px solid yellow;
     border-radius: 3px;
     margin: 2px;
     font-size: 2.5rem;
@@ -66,3 +66,34 @@ h1 {
 .keyboard-button:hover, .keyboard-button:focus{
     background-color: peru;
   }
+
+  .hidden {
+    display:none;
+}
+
+  .correct{
+   background-color: green;
+   border-color: white;
+   color: white;
+  }
+
+  .present{
+    background-color: yellow;
+    border-color: white;
+    color: white;
+  }
+
+  .absent{
+    background-color: darkgray;
+    border-color: white;
+    color: white;
+  }
+
+  .toast-title {
+  font-weight: bold;
+}
+
+.toast-message a,
+.toast-message label {
+  color: #FFFFFF;
+}

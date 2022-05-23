@@ -5,9 +5,38 @@ let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
+let Column =  0;
+let Row = 0;
+let wordLength = 5;
+var gameover = false;
 
+window.onload =function(){
+    initBoard();
+    GameLoop();
+    correct();
+    resert();
+}
 
-console.log(rightGuessString)
+function correct(){
+    var button = document.getElementById("word");
+    button.onclick = function() {
+        toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
+    }
+}
+
+function resert(){
+        var button = document.getElementById("restart");
+        button.onclick = function() {
+        rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
+        guessesRemaining = NUMBER_OF_GUESSES;
+        clearTable();
+        nextLetter = 0;
+        currentGuess.length = 0
+        toastr.info('Game restarted!',{timeOut: 3000})
+    }
+}
+
+//console.log(rightGuessString)
 
 function initBoard(){
     let board = document.getElementById("game-board");
@@ -16,7 +45,7 @@ function initBoard(){
         let row = document.createElement("div")
         row.className = "letter-row"
         
-        for (let j = 0; j < 5; j++) {
+        for (let j = 0; j < wordLength; j++) {
             let box = document.createElement("div")
             box.className = "letter-box"
             row.appendChild(box)
@@ -25,51 +54,50 @@ function initBoard(){
         board.appendChild(row)
     }
 }
-initBoard();
 
-function shadeKeyBoard(letter, color) {
-    for (const elem of document.getElementsByClassName("keyboard-button")) {
-        if (elem.textContent === letter) {
-            let oldColor = elem.style.backgroundColor
-            if (oldColor === 'green') {
-                return
-            } 
+function GameLoop(){
+document.addEventListener("keyup", (e) => {
+    if(guessesRemaining === 0) { return; }
 
-            if (oldColor === 'yellow' && color !== 'green') {
-                return
-            }
+    else{
+    let pressedKey = String(e.key)
+    let found = pressedKey.match(/[a-z]/gi)
 
-            elem.style.backgroundColor = color
-            break
-        }
+    if (pressedKey === "Backspace" && nextLetter !== 0) {
+        deleteLetter()
+        return
     }
-}
 
-function deleteLetter () {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
-    let box = row.children[nextLetter - 1]
-    box.textContent = ""
-    box.classList.remove("filled-box")
-    currentGuess.pop()
-    nextLetter -= 1
+    if (e.code == "Enter") {
+        checkGuess()
+        return
+    }
+
+    if (!found || found.length > 1) {
+        return
+    } else {
+        insertLetter(pressedKey)
+     }
+    }
+  })
 }
 
 function checkGuess () {
     let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
     let guessString = ''
     let rightGuess = Array.from(rightGuessString)
-
+    
     for (const val of currentGuess) {
         guessString += val
     }
 
     if (guessString.length != 5) {
-        toastr.error("Not enough letters!")
+        toastr.warning("Not enough letters!",'Warning:',{timeOut: 3000})
         return
     }
 
     if (!WORDS.includes(guessString)) {
-        toastr.error("Word not in list!")
+        toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
         return
     }
 
@@ -109,7 +137,7 @@ function checkGuess () {
     }
 
     if (guessString === rightGuessString) {
-        toastr.success("You guessed right! Game over!")
+        toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
         guessesRemaining = 0
         return
     } else {
@@ -117,26 +145,30 @@ function checkGuess () {
         currentGuess = [];
         nextLetter = 0;
 
+
         if (guessesRemaining === 0) {
-            toastr.error("You've run out of guesses! Game over!")
-            toastr.info(`The right word was: "${rightGuessString}"`)
+            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
+            toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})
         }
     }
 }
 
-function insertLetter (pressedKey) {
-    if (nextLetter === 5) {
-        return
-    }
-    pressedKey = pressedKey.toLowerCase()
+function shadeKeyBoard(letter, color) {
+    for (const elem of document.getElementsByClassName("keyboard-button")) {
+        if (elem.textContent === letter) {
+            let oldColor = elem.style.backgroundColor
+            if (oldColor === 'green') {
+                return
+            } 
 
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
-    let box = row.children[nextLetter]
-    animateCSS(box, "pulse")
-    box.textContent = pressedKey
-    box.classList.add("filled-box")
-    currentGuess.push(pressedKey)
-    nextLetter += 1
+            if (oldColor === 'yellow' && color !== 'green') {
+                return
+            }
+
+            elem.style.backgroundColor = color
+            break
+        }
+    }
 }
 
 const animateCSS = (element, animation, prefix = 'animate__') =>
@@ -159,31 +191,6 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
     node.addEventListener('animationend', handleAnimationEnd, {once: true});
 });
 
-document.addEventListener("keyup", (e) => {
-
-    if (guessesRemaining === 0) {
-        return
-    }
-
-    let pressedKey = String(e.key)
-    if (pressedKey === "Backspace" && nextLetter !== 0) {
-        deleteLetter()
-        return
-    }
-
-    if (pressedKey === "Enter") {
-        checkGuess()
-        return
-    }
-
-    let found = pressedKey.match(/[a-z]/gi)
-    if (!found || found.length > 1) {
-        return
-    } else {
-        insertLetter(pressedKey)
-    }
-})
-
 document.getElementById("keyboard-cont").addEventListener("click", (e) => {
     const target = e.target
     
@@ -194,8 +201,52 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
 
     if (key === "Del") {
         key = "Backspace"
+    }  
+    
+    if (key === "Enter") {
+        key = "Enter"
     } 
 
     document.dispatchEvent(new KeyboardEvent("keyup", {'key': key}))
 })
 
+function insertLetter (pressedKey) {
+    if (nextLetter === 5) {
+        return
+    }
+    else{
+        pressedKey = pressedKey.toLowerCase()
+
+        let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
+        let box = row.children[nextLetter]
+        animateCSS(box, "pulse")
+        box.textContent = pressedKey
+        box.classList.add("filled-box")
+        currentGuess.push(pressedKey)
+        nextLetter += 1 
+    } 
+}
+
+function deleteLetter () {
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
+    let box = row.children[nextLetter - 1]
+    box.textContent = ""
+    box.classList.remove("filled-box")
+    currentGuess.pop()
+    nextLetter -= 1
+}
+
+function clearTable(){
+    for(let i=0; i<NUMBER_OF_GUESSES; i++)
+    {
+        let row = document.getElementsByClassName("letter-row")[i]
+    
+        for(let j=0; j<wordLength; j++)
+        {
+            let box = row.children[j]
+            box.textContent = ""
+            box.classList.remove("filled-box")
+            box.style.backgroundColor = ""
+        }
+    }
+}
