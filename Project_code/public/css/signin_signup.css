@@ -1,5 +1,13 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url(/static/public/image/backg.jpg);
+  background-size: cover;
+}
+
 body {
-    background-color: #344a72;
+    /*background-color: #344a72;*/
     font-family: "Roboto", sans-serif;
   }
   
