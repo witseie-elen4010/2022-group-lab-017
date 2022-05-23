@@ -1,5 +1,14 @@
 import { WORDS } from '/static/public/scripts/words.js'
+import { states } from '../scripts/gameStates.js'
 
+/// changing between states
+const gameState = new states()
+if (gameState.getcurrentState() == 'Menu') {
+  // show player multi player options
+  console.log(gameState.getcurrentState())
+}
+
+//
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
@@ -195,12 +204,3 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
 
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
-/// connceting to server
-const writeEvent = (text) => {
-  const parent = document.querySelector('#game-board')
-
-  // <li>
-  const el = document.createElement('li')
-  el.appendChild(el)
-}
-writeEvent('welocme to wordle++')
