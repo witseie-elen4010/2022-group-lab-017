@@ -23,4 +23,8 @@ mainRouter.get('/main_menu', function (req, res) {
   res.sendFile(path.join(__dirname, '../views', 'main_menu.html'))
 })
 
+mainRouter.get('/twoPlayers', function (req, res) {
+  res.sendFile(path.join(__dirname, '../views', 'invite_player.html'))
+})
+
 module.exports = mainRouter
