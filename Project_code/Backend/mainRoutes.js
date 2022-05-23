@@ -19,4 +19,8 @@ mainRouter.get('/game', function (req, res) {
   res.sendFile(path.join(__dirname, '../views', 'game.html'))
 })
 
+mainRouter.get('/main_menu', function (req, res) {
+  res.sendFile(path.join(__dirname, '../views', 'main_menu.html'))
+})
+
 module.exports = mainRouter
