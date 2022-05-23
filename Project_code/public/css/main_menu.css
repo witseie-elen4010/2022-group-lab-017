@@ -1,0 +1,137 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: url(/static/public/image/backg.jpg);
+    background-size: cover;
+  }
+
+.form__button_1 {
+    
+    width:  20%;
+    height: 20%;
+    padding: 1rem 2rem ;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f7f4f4;
+    border: none;
+    border-radius: 12px ;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid #4CAF50;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin-top: -50px;
+    margin-left: -50px;
+    transition-duration: 0.4s;
+}
+
+.form__button_1:hover {
+    background: rgb(36, 132, 44);  
+}
+.form__button_1:active{
+    transform: scale(0.98); 
+}
+
+.form__button_2 {
+    
+    width:  20%;
+    height: 20%;
+    padding: 1rem 2rem ;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f7f4f4;
+    border: none;
+    border-radius: 12px ;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid #4CAF50;
+    position: absolute;
+    top: 35%;
+    left: 53%;
+    margin-top: -50px;
+    margin-left: -50px;
+    transition-duration: 0.4s;
+}
+
+.form__button_2:hover {
+    background: rgb(36, 132, 44);  
+}
+.form__button_2:active{
+    transform: scale(0.98); 
+}
+
+.form__button_3 {
+    
+    width:  20%;
+    height: 20%;
+    padding: 1rem 2rem ;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f7f4f4;
+    border: none;
+    border-radius: 12px ;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid #4CAF50;
+    position: absolute;
+    top: 60%;
+    left: 30%;
+    margin-top: -50px;
+    margin-left: -50px;
+    transition-duration: 0.4s;
+}
+
+.form__button_3:hover {
+    background: rgb(36, 132, 44);  
+}
+.form__button_3:active{
+    transform: scale(0.98); 
+}
+
+.form__button_4 {
+    
+    width:  20%;
+    height: 20%;
+    padding: 1rem 2rem ;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f7f4f4;
+    border: none;
+    border-radius: 12px ;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid #4CAF50;
+    position: absolute;
+    top: 60%;
+    left: 53%;
+    margin-top: -50px;
+    margin-left: -50px;
+    transition-duration: 0.4s;
+}
+
+.form__button_4:hover {
+    background: rgb(36, 132, 44);  
+}
+.form__button_4:active{
+    transform: scale(0.98); 
+}
+
+
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 200px;
+    height: 100px;
+    border: 3px solid #73AD21;
+
+  }
