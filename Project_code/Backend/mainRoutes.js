@@ -19,6 +19,10 @@ mainRouter.get('/game', function (req, res) {
   res.sendFile(path.join(__dirname, '../views', 'game.html'))
 })
 
+mainRouter.get('/game2', function (req, res) {
+  res.sendFile(path.join(__dirname, '../views', 'game_2.html'))
+})
+
 mainRouter.get('/main_menu', function (req, res) {
   res.sendFile(path.join(__dirname, '../views', 'main_menu.html'))
 })
