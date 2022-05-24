@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "1. Ntsemi Bophilo\r 2. Thabang Sean Banyini\r 3. Goodwill Phooko\r 4. Felix Mashingaidze\r 5. Kevin Naidoo",
   "main": "index.js",
-  "scripts": {
-  
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/witseie-elen4010/2022-group-lab-017.git"
@@ -19,5 +17,8 @@
   "dependencies": {
     "bootstrap": "^5.2.0-beta1",
     "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.22.2"
   }
 }
