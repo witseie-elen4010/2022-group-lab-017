@@ -232,16 +232,16 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
 })
 
 function clearTable(){
-  for(let i=0; i<NUMBER_OF_GUESSES; i++)
-  {
-      let row = document.getElementsByClassName("letter-row")[i]
-  
-      for(let j=0; j<wordLength; j++)
-      {
-          let box = row.children[j]
-          box.textContent = ""
-          box.classList.remove("filled-box")
-          box.style.backgroundColor = ""
-      }
-  }
+    for(let i=0; i<NUMBER_OF_GUESSES; i++)
+    {
+        let row = document.getElementsByClassName("letter-row")[i]
+    
+        for(let j=0; j<wordLength; j++)
+        {
+            let box = row.children[j]
+            box.textContent = ""
+            box.classList.remove("filled-box")
+            box.style.backgroundColor = ""
+        }
+    }
 }
