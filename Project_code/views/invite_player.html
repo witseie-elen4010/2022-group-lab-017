@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="static/public/css/invite_player.css" />
 </head>
 <body>
-    <div class="dropdown">
+   <!-- <div class="dropdown">
         <button class="dropbtn">Choose an Online Player to Invite</button>
         <div class="dropdown-content">
           <a href="#">Goodwill</a>
@@ -16,7 +16,22 @@
           <a href="#">Thabang</a>
           <a href="#">Bophelo</a>
         </div>
+      </div>-->
+      <div class="dropdown_instruction">
+        Choose an Online Player to Invite:
       </div>
-
+      <div class="dropdown">
+        <select id="select1" class="dropbtn" onclick="getOption()">
+          <option value="free"></option>
+          <option value="free">Goodwill</option>
+          <option value="basic">Bophelo</option>
+          <option value="premium">Felix</option>
+          <option value="premium">Kevin</option>
+          <option value="premium">Thabang</option>
+      </select>
+      </div>
+      <div class="invitePlayer">   
+      </div>
+      <script src="/static/public/scripts/invite_player.js"></script> 
 </body>
 </html>
