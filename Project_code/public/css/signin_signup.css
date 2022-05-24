@@ -25,6 +25,8 @@ body {
     margin: auto;
     border-radius: 3px;
     background-color: white;
+    position: relative;
+    top: 150px;
   }
   
   h1 {
@@ -68,6 +70,8 @@ body {
     text-align: center;
     padding-top: 20px;
     font-size: 15px;
+    position: relative;
+    top: 145px;
   }
   .para-2 {
     text-align: center;
