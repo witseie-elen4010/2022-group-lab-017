@@ -1,4 +1,5 @@
 body{
+
     margin: 0;
     padding: 0;
     font-family: sans-serif;
@@ -83,5 +84,93 @@ body{
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {
+
     background-color: #f5faf5;
   }
+
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url(/static/public/image/backg.jpg);
+  background-size: cover;
+}
+
+body {
+    /*background-color: #344a72;*/
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .invite-box {
+    width: 410px;
+    height: 220px;
+    margin: auto;
+    border-radius: 3px;
+    background-color: grey;
+    position: relative;
+    top: 150px;
+  }
+  
+  form {
+    width: 300px;
+    margin-left: 20px;
+  }
+  
+  form label {
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+  }
+  input[type="button"] {
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+  }
+  p {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+    position: relative;
+    top: 145px;
+  }
+  .para-2 {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    margin-top: -10px;
+  }
+  .para-2 a {
+    color: #49c1a2;
+  }
+  
+  .form__button {
+    width:  70%;
+    padding: 1rem 2rem ;
+    margin-left: 20%;
+    margin-top: 3%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f5f6f5;
+    border: none;
+    border-radius: 25px; /*var(--border-radius) ;*/
+    outline: none;
+    cursor: pointer;
+    background: #21d002b4; /*var(--color-primary);*/
+}
+
+.form__button:active{
+    transform: scale(0.98); 
+}
+
