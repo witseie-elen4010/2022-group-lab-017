@@ -16,7 +16,31 @@ let nextLetter = 0
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
 // set up the sockets.io
 
-console.log(rightGuessString)
+window.onload =function(){
+    initBoard();
+    GameLoop();
+    correct();
+    resert();
+}
+
+function correct(){
+  var button = document.getElementById("word");
+  button.onclick = function() {
+      toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
+  }
+}
+
+function resert(){
+  var button = document.getElementById("restart");
+  button.onclick = function() {
+  rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
+  guessesRemaining = NUMBER_OF_GUESSES;
+  clearTable();
+  nextLetter = 0;
+  currentGuess.length = 0
+  toastr.info('Game restarted!',{timeOut: 3000})
+}
+}
 
 function initBoard () {
   const board = document.getElementById('game-board')
@@ -34,7 +58,7 @@ function initBoard () {
     board.appendChild(row)
   }
 }
-initBoard()
+
 
 function shadeKeyBoard (letter, color) {
   for (const elem of document.getElementsByClassName('keyboard-button')) {
@@ -53,6 +77,32 @@ function shadeKeyBoard (letter, color) {
     }
   }
 }
+
+function GameLoop(){
+  document.addEventListener('keyup', (e) => {
+    if (guessesRemaining === 0) {
+      return
+    }
+  
+    const pressedKey = String(e.key)
+    if (pressedKey === 'Backspace' && nextLetter !== 0) {
+      deleteLetter()
+      return
+    }
+  
+    if (pressedKey === 'Enter') {
+      checkGuess()
+      return
+    }
+  
+    const found = pressedKey.match(/[a-z]/gi)
+    if (!found || found.length > 1) {
+  
+    } else {
+      insertLetter(pressedKey)
+    }
+  })
+  }
 
 function deleteLetter () {
   const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
@@ -73,12 +123,12 @@ function checkGuess () {
   }
 
   if (guessString.length != 5) {
-    toastr.error('Not enough letters!')
+    toastr.warning("Not enough letters!",'Warning:',{timeOut: 3000})
     return
   }
 
   if (!WORDS.includes(guessString)) {
-    toastr.error('Word not in list!')
+    toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
     return
   }
 
@@ -117,7 +167,7 @@ function checkGuess () {
   }
 
   if (guessString === rightGuessString) {
-    toastr.success('You guessed right! Game over!')
+    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -125,8 +175,8 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-      toastr.error("You've run out of guesses! Game over!")
-      toastr.info(`The right word was: "${rightGuessString}"`)
+            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
+            toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})
     }
   }
 }
@@ -166,30 +216,6 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
     node.addEventListener('animationend', handleAnimationEnd, { once: true })
   })
 
-document.addEventListener('keyup', (e) => {
-  if (guessesRemaining === 0) {
-    return
-  }
-
-  const pressedKey = String(e.key)
-  if (pressedKey === 'Backspace' && nextLetter !== 0) {
-    deleteLetter()
-    return
-  }
-
-  if (pressedKey === 'Enter') {
-    checkGuess()
-    return
-  }
-
-  const found = pressedKey.match(/[a-z]/gi)
-  if (!found || found.length > 1) {
-
-  } else {
-    insertLetter(pressedKey)
-  }
-})
-
 document.getElementById('keyboard-cont').addEventListener('click', (e) => {
   const target = e.target
 
@@ -204,3 +230,18 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
 
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
+
+function clearTable(){
+  for(let i=0; i<NUMBER_OF_GUESSES; i++)
+  {
+      let row = document.getElementsByClassName("letter-row")[i]
+  
+      for(let j=0; j<wordLength; j++)
+      {
+          let box = row.children[j]
+          box.textContent = ""
+          box.classList.remove("filled-box")
+          box.style.backgroundColor = ""
+      }
+  }
+}
