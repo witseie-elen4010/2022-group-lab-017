@@ -1,61 +1,86 @@
 body{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: url(/static/public/image/backg.jpg);
-    background-size: cover;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: url(/static/public/image/backg.jpg);
+  background-size: cover;
+}
 
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
+body {
+    /*background-color: #344a72;*/
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .invite-box {
+    width: 410px;
+    height: 220px;
+    margin: auto;
+    border-radius: 3px;
+    background-color: grey;
+    position: relative;
+    top: 150px;
+  }
+  
+  form {
+    width: 300px;
+    margin-left: 20px;
+  }
+  
+  form label {
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 7px;
     border: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+  }
+  input[type="button"] {
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+  }
+  p {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+    position: relative;
+    top: 145px;
+  }
+  .para-2 {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    margin-top: -10px;
+  }
+  .para-2 a {
+    color: #49c1a2;
+  }
+  
+  .form__button {
+    width:  70%;
+    padding: 1rem 2rem ;
+    margin-left: 20%;
+    margin-top: 3%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f5f6f5;
+    border: none;
+    border-radius: 25px; /*var(--border-radius) ;*/
+    outline: none;
     cursor: pointer;
-    width: 70%;
-    height: 50%;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: absolute;
-    display: inline-block;
-    top: 20%;
-    left: 45%;
-    margin-top: -50px;
-    margin-left: -50px;
-    width: 20%;
-    height: 20%;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 70%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #f1f1f1}
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-  }
+    background: #21d002b4; /*var(--color-primary);*/
+}
+
+.form__button:active{
+    transform: scale(0.98); 
+}
