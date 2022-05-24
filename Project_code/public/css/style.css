@@ -9,11 +9,19 @@ body{
 h1 {
     text-align: center;
    }
-
+.board{
+  display:flex;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  left: 600px;
+}
 .game-board {
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    right: 30px;
   }
   
 .letter-box {
@@ -75,3 +83,34 @@ h1 {
   .toast-message label {
     color: #FFFFFF;
   }
+
+.game-board_2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  left: 60px;
+}
+
+.letter-box2 {
+  border: 2px solid yellow;
+  border-radius: 3px;
+  margin: 2px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.letter-row2 {
+  display: flex;
+}
+
+.objects{
+  position: relative;
+  top: 30px;
+}
