@@ -7,6 +7,19 @@ const app = express()
 app.use('/static', express.static('Project_code'))
 app.use(mainRouter)
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+const http = require('http')
+const server = http.createServer(app)
+const { Server } = require('socket.io')
+const io = new Server(server)
+
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
 })
+
+server.listen(3000, () => {
+  console.log(' server listening on *:3000')
+})
+io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' }) // This will emit the event to all connected sockets
