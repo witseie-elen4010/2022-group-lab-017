@@ -13,7 +13,8 @@ const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
 let nextLetter = 0
-const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
+let rightGuessString = randWord();
+let wordLength = 5;
 // set up the sockets.io
 
 window.onload =function(){
@@ -31,15 +32,21 @@ function correct(){
 }
 
 function resert(){
-  var button = document.getElementById("restart");
-  button.onclick = function() {
-  rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
-  guessesRemaining = NUMBER_OF_GUESSES;
-  clearTable();
-  nextLetter = 0;
-  currentGuess.length = 0
-  toastr.info('Game restarted!',{timeOut: 3000})
+       
+        var button = document.getElementById("restart");
+        button.onclick = function() {
+        rightGuessString = randWord();
+        guessesRemaining = NUMBER_OF_GUESSES;
+        clearTable();
+        nextLetter = 0;
+        currentGuess.length = 0
+        toastr.info('Game restarted!',{timeOut: 3000})
+    }
 }
+
+function randWord(){
+  let word = WORDS[Math.floor(Math.random() * WORDS.length)];
+  return word;
 }
 
 function initBoard () {
@@ -176,10 +183,11 @@ function checkGuess () {
 
     if (guessesRemaining === 0) {
             toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
-            toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})
+            setTimeout(function(){
+              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
+            }
     }
   }
-}
 
 function insertLetter (pressedKey) {
   if (nextLetter === 5) {
