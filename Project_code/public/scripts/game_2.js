@@ -7,7 +7,11 @@ if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
   console.log(gameState.getcurrentState())
 }
-//
+// sever communacation
+const socket = io()
+socket.on('connectToRoom', function (data) {
+  console.log(data) // simple reply of each client that joins the room
+})
 
 //
 const NUMBER_OF_GUESSES = 6

@@ -12,12 +12,10 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
-
-io.on('connection', (socket) => {
-  console.log('a user connected')
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
-  })
+const room_number = 1
+io.on('connection', function (socket) {
+  socket.join('room' + room_number) /// simple trial of joining room one
+  io.sockets.in('room' + room_number).emit('connectToRoom', ' Welcome to room number' + room_number)
 })
 
 server.listen(3000, () => {
