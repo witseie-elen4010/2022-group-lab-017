@@ -1,12 +1,13 @@
 import { WORDS } from '/static/public/scripts/words.js'
 import { states } from '../scripts/gameStates.js'
-const socket = io('https://server-domain.com')
+import { io } from 'https://cdn.socket.io/4.4.1/socket.io.esm.min.js'
 /// changing between states
 const gameState = new states()
 if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
   console.log(gameState.getcurrentState())
 }
+//
 
 //
 const NUMBER_OF_GUESSES = 6

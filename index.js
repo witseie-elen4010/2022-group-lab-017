@@ -6,7 +6,7 @@ const app = express()
 
 app.use('/static', express.static('Project_code'))
 app.use(mainRouter)
-app.use('/static', socket.static(sever))
+// app.use('/static', socket.static(sever))
 
 const http = require('http')
 const server = http.createServer(app)
