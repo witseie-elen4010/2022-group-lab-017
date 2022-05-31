@@ -8,9 +8,7 @@ if (gameState.getcurrentState() == 'Menu') {
   console.log(gameState.getcurrentState())
 }
 
-// sockets
-const socket = io('localhost:3000')
-socket.emit('hello', 'world')
+
 //
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
