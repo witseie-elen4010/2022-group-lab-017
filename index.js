@@ -30,7 +30,7 @@ io.on('connection', function (socket) {
 
   // Listerning to player 2 events
   socket.on('playerResponse', (arg) => {
-    console.log('room  ' + room_number + arg) // world
+    console.log('room' + ' ' + room_number + arg) // world
   })
 })
 
