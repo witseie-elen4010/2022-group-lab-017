@@ -251,5 +251,7 @@ function clearTable () {
       box.classList.remove('filled-box')
       box.style.backgroundColor = ''
     }
+
   }
 }
+

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +21,7 @@
         Choose an Online Player to Invite:
       </div>
       <div class="dropdown">
-        <select id="select1" class="dropbtn" onclick="getOption()">
+        <select id="select1" class="dropbtn" onclick="getOption()" action="/game2">
           <option value="free"></option>
           <option value="free">Goodwill</option>
           <option value="basic">Bophelo</option>
@@ -32,19 +31,13 @@
       </select>
       </div>
       <div class="invitePlayer">   
+        <form action="/game2">
+          <button class="form__button" id="singlePlayer" type="submit">Invite</button>
+      </form>
       </div>
       <script src="/static/public/scripts/invite_player.js"></script> 
 </body>
-=======
-  <head>
-    <title>Login</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/public/css/invite_player.css" />
-  
-  </head>
-  <body>
+ <!-- <body>
     <div class="invite-box">
       <h1>INVITE ANOTHER PLAYER</h1>
       <form id="login" action="/static/views/game_2.html">
@@ -53,6 +46,5 @@
         <button type="submit" class="form__button"> Submit </button>
       </form>
     </div>
-  </body>
->>>>>>> fdb6f6dc2dbbb5920aeecb3588782c8fd7e6de9b
+  </body>-->
 </html>
