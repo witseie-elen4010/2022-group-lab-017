@@ -1,11 +1,18 @@
 
-const mainRouter = require('./Project_code/Backend/mainRoutes')
+const mainRouter = require('./Project_code/Backend/Routes/mainRoutes')
+const userAccountRouter = require('./Project_code/Backend/Routes/userAccount')
+const bcrypt = require('bcrypt')
 // const path = require('path')
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/static', express.static('Project_code'))
 app.use(mainRouter)
+app.use(userAccountRouter)
+/// seting up the sockets.io
 
 // app.use('/static', socket.static(sever))
 let room_number = 1

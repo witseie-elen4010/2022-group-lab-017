@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <link rel="stylesheet" href="static/public/css/invite_two_players.css" />
+</head>
+<body>
+   <!-- <div class="dropdown">
+        <button class="dropbtn">Choose an Online Player to Invite</button>
+        <div class="dropdown-content">
+          <a href="#">Goodwill</a>
+          <a href="#">Kevin</a>
+          <a href="#">Thabang</a>
+          <a href="#">Bophelo</a>
+        </div>
+      </div>-->
+      <div class="dropdown_instruction">
+        Choose Two Online Players to Invite
+      </div>
+      <div class="dropdown_1">
+        <select id="select1" class="dropbtn" onclick="getOption()">
+          <option value="free"></option>
+          <option value="free">Goodwill</option>
+          <option value="basic">Bophelo</option>
+          <option value="premium">Felix</option>
+          <option value="premium">Kevin</option>
+          <option value="premium">Thabang</option>
+      </select>
+      </div>
+      <div class="dropdown_2">
+        <select id="select2" class="dropbtn" onclick="getOption()">
+          <option value="free"></option>
+          <option value="free">Goodwill</option>
+          <option value="basic">Bophelo</option>
+          <option value="premium">Felix</option>
+          <option value="premium">Kevin</option>
+          <option value="premium">Thabang</option>
+      </select>
+      </div>
+      <div class="invitePlayer">   
+        <form action="/game2">
+          <button class="form__button" id="singlePlayer" type="submit">Invite Players</button>
+      </form>
+      </div>
+      <script src="/static/public/scripts/invite_two_player.js"></script> 
+</body>
+ <!-- <body>
+    <div class="invite-box">
+      <h1>INVITE ANOTHER PLAYER</h1>
+      <form id="login" action="/static/views/game_2.html">
+        <label>LINK</label>
+        <input type="text" placeholder="enter link"/>
+        <button type="submit" class="form__button"> Submit </button>
+      </form>
+    </div>
+  </body>-->
+</html>
