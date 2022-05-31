@@ -1,53 +1,61 @@
 import { WORDS } from '/static/public/scripts/words.js'
 import { states } from '../scripts/gameStates.js'
-
+import { io } from 'https://cdn.socket.io/4.4.1/socket.io.esm.min.js'
 /// changing between states
 const gameState = new states()
+
 if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
   console.log(gameState.getcurrentState())
 }
+// sever communacation
+let myColourCodes = []
+const socket = io()
+socket.on('connectToRoom', function (data) {
+  console.log(data) // simple reply of each client that joins the room
+})
+
+// Send my responses to server
 
 //
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
 let nextLetter = 0
-let rightGuessString = randWord();
-let wordLength = 5;
+let rightGuessString = randWord()
+const wordLength = 5
 // set up the sockets.io
 
-window.onload =function(){
-    initBoard();
-    initBoard_2();
-    GameLoop();
-    correct();
-    resert();
+window.onload = function () {
+  initBoard()
+  initBoard_2()
+  GameLoop()
+  correct()
+  resert()
 }
 
-function correct(){
-  var button = document.getElementById("word");
-  button.onclick = function() {
-      toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
+function correct () {
+  const button = document.getElementById('word')
+  button.onclick = function () {
+    toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!', { timeOut: 3000 })
   }
 }
 
-function resert(){
-       
-        var button = document.getElementById("restart");
-        button.onclick = function() {
-        rightGuessString = randWord();
-        guessesRemaining = NUMBER_OF_GUESSES;
-        clearTable();
-        nextLetter = 0;
-        currentGuess.length = 0
-        toastr.info('Game restarted!',{timeOut: 3000})
-    }
+function resert () {
+  const button = document.getElementById('restart')
+  button.onclick = function () {
+    rightGuessString = randWord()
+    guessesRemaining = NUMBER_OF_GUESSES
+    clearTable()
+    nextLetter = 0
+    currentGuess.length = 0
+    toastr.info('Game restarted!', { timeOut: 3000 })
+  }
 }
 
-function randWord(){
-  let word = WORDS[Math.floor(Math.random() * WORDS.length)];
-  return word;
+function randWord () {
+  const word = WORDS[Math.floor(Math.random() * WORDS.length)]
+  return word
 }
 
 function initBoard () {
@@ -83,7 +91,6 @@ function initBoard_2 () {
   }
 }
 
-
 function shadeKeyBoard (letter, color) {
   for (const elem of document.getElementsByClassName('keyboard-button')) {
     if (elem.textContent === letter) {
@@ -100,33 +107,35 @@ function shadeKeyBoard (letter, color) {
       break
     }
   }
+  // send this information to the server
 }
 
-function GameLoop(){
+function GameLoop () {
   document.addEventListener('keyup', (e) => {
     if (guessesRemaining === 0) {
       return
     }
-  
+
     const pressedKey = String(e.key)
     if (pressedKey === 'Backspace' && nextLetter !== 0) {
       deleteLetter()
       return
     }
-  
+
     if (pressedKey === 'Enter') {
       checkGuess()
+      myColourCodes = []
       return
     }
-  
+
     const found = pressedKey.match(/[a-z]/gi)
     if (!found || found.length > 1) {
-  
+
     } else {
       insertLetter(pressedKey)
     }
   })
-  }
+}
 
 function deleteLetter () {
   const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
@@ -147,12 +156,12 @@ function checkGuess () {
   }
 
   if (guessString.length != 5) {
-    toastr.warning("Not enough letters!",'Warning:',{timeOut: 3000})
+    toastr.warning('Not enough letters!', 'Warning:', { timeOut: 3000 })
     return
   }
 
   if (!WORDS.includes(guessString)) {
-    toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
+    toastr.warning('Word not in guess list!', 'Warning:', { timeOut: 3000 })
     return
   }
 
@@ -165,6 +174,7 @@ function checkGuess () {
     // is letter in the correct guess
     if (letterPosition === -1) {
       letterColor = 'grey'
+      myColourCodes.push(letterColor) /// colour codes for player 2
     } else {
       // now, letter is definitely in word
       // if letter index and right guess index are the same
@@ -172,12 +182,16 @@ function checkGuess () {
       if (currentGuess[i] === rightGuess[i]) {
         // shade green
         letterColor = 'green'
+        myColourCodes.push(letterColor) /// colour codes for player 2
       } else {
         // shade box yellow
         letterColor = 'yellow'
+        myColourCodes.push(letterColor) /// colour codes for player 2
       }
 
       rightGuess[letterPosition] = '#'
+
+      socket.emit('playerResponse', myColourCodes)
     }
 
     const delay = 250 * i
@@ -191,7 +205,7 @@ function checkGuess () {
   }
 
   if (guessString === rightGuessString) {
-    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
+    toastr.success('You guessed right! Game over!', 'Winner!', { timeOut: 3000 })
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -199,12 +213,13 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
-            setTimeout(function(){
-              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
-            }
+      toastr.error("You've run out of guesses!", 'Game Over!!:', { timeOut: 3000 })
+      setTimeout(function () {
+        toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!', { timeOut: 3000 })
+      }, 3000)
     }
   }
+}
 
 function insertLetter (pressedKey) {
   if (nextLetter === 5) {
@@ -256,17 +271,15 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
 
-function clearTable(){
-    for(let i=0; i<NUMBER_OF_GUESSES; i++)
-    {
-        let row = document.getElementsByClassName("letter-row")[i]
-    
-        for(let j=0; j<wordLength; j++)
-        {
-            let box = row.children[j]
-            box.textContent = ""
-            box.classList.remove("filled-box")
-            box.style.backgroundColor = ""
-        }
+function clearTable () {
+  for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+    const row = document.getElementsByClassName('letter-row')[i]
+
+    for (let j = 0; j < wordLength; j++) {
+      const box = row.children[j]
+      box.textContent = ''
+      box.classList.remove('filled-box')
+      box.style.backgroundColor = ''
     }
+  }
 }

@@ -16,7 +16,7 @@
   "homepage": "https://github.com/witseie-elen4010/2022-group-lab-017#readme",
   "dependencies": {
     "bootstrap": "^5.2.0-beta1",
-    "express": "4.18.1",
+    "express": "^4.18.1",
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
