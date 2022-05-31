@@ -11,8 +11,8 @@ if (gameState.getcurrentState() == 'Menu') {
 // sever communacation
 let myColourCodes = []
 const socket = io()
-socket.on('connectToRoom', function (data) {
-  console.log(data) // simple reply of each client that joins the room
+socket.on('connectToRoom', function (data, second) {
+  console.log(data + second) // simple reply of each client that joins the room
 })
 
 // Send my responses to server

@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
     number_of_connectors = 0
   }
   socket.join('room' + room_number) /// simple trial of joining room one
-  io.to('room' + room_number).emit('connectToRoom', ' Welcome to room number' + room_number)
+  io.to('room' + room_number).emit('connectToRoom', ' Welcome to room number' + room_number, room_number)
   number_of_connectors += 1
 
   // Listerning to player 2 events
@@ -41,10 +41,6 @@ io.on('connection', function (socket) {
   })
 })
 
-io.on('disconnect', function (socket) {
-
-  // check for available rooms
-})
 io.on('playerRespose', function (data) {
   console.log('player respose' + data)
 })
