@@ -11,16 +11,16 @@
   <body>
     <div class="signup-box">
       <h1>Sign Up</h1>
-      <form id="signup" method="POST" action="/signup">
+      <form id="signup" method = "POST" action="/register">
         <label>UserName</label>
-        <input type="text" placeholder="" />
+        <input type="text" name = "user_name" placeholder="Username" />
         <label>Email</label>
-        <input type="email" placeholder="" />
+        <input type="email" name = "user_email" placeholder="Email" />
         <label>Password</label>
-        <input type="password" placeholder="" />
+        <input type="password" name = "user_password" placeholder="Password" />
         <label>Confirm Password</label>
-        <input type="password" placeholder="" />
-        <input type="button" value="Submit" />
+        <input type="password" name = "user_password_confirm" placeholder="Confirm Password" />
+        <button type="submit" class="form__button_2"> Submit </button>
       </form>
     </div>
     <p class="para-2">

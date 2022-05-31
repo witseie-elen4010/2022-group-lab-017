@@ -13,7 +13,7 @@ body {
   
   .signup-box {
     width: 360px;
-    height: 620px;
+    height: 450px;
     margin: auto;
     background-color: white;
     border-radius: 3px;
@@ -100,4 +100,24 @@ body {
 
 .form__button:active{
     transform: scale(0.98); 
+}
+
+.form__button_2 {
+  width:  70%;
+  text-align: center;
+  padding: 1rem 2rem ;
+  margin-left: 18%;
+  margin-top: 5%;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #f5f6f5;
+  border: none;
+  border-radius: 25px; /*var(--border-radius) ;*/
+  outline: none;
+  cursor: pointer;
+  background: #21d002b4; /*var(--color-primary);*/
+}
+
+.form__button_2:active{
+  transform: scale(0.98); 
 }

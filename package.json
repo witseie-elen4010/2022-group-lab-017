@@ -15,8 +15,12 @@
   },
   "homepage": "https://github.com/witseie-elen4010/2022-group-lab-017#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "bootstrap": "^5.2.0-beta1",
     "express": "4.18.1",
+    "mssql": "8.1.2",
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
