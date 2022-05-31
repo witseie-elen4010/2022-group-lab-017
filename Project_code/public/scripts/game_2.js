@@ -3,15 +3,19 @@ import { states } from '../scripts/gameStates.js'
 import { io } from 'https://cdn.socket.io/4.4.1/socket.io.esm.min.js'
 /// changing between states
 const gameState = new states()
+
 if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
   console.log(gameState.getcurrentState())
 }
 // sever communacation
+let myColourCodes = []
 const socket = io()
 socket.on('connectToRoom', function (data) {
   console.log(data) // simple reply of each client that joins the room
 })
+
+// Send my responses to server
 
 //
 const NUMBER_OF_GUESSES = 6
@@ -103,6 +107,7 @@ function shadeKeyBoard (letter, color) {
       break
     }
   }
+  // send this information to the server
 }
 
 function GameLoop () {
@@ -119,6 +124,7 @@ function GameLoop () {
 
     if (pressedKey === 'Enter') {
       checkGuess()
+      myColourCodes = []
       return
     }
 
@@ -168,6 +174,7 @@ function checkGuess () {
     // is letter in the correct guess
     if (letterPosition === -1) {
       letterColor = 'grey'
+      myColourCodes.push(letterColor) /// colour codes for player 2
     } else {
       // now, letter is definitely in word
       // if letter index and right guess index are the same
@@ -175,12 +182,16 @@ function checkGuess () {
       if (currentGuess[i] === rightGuess[i]) {
         // shade green
         letterColor = 'green'
+        myColourCodes.push(letterColor) /// colour codes for player 2
       } else {
         // shade box yellow
         letterColor = 'yellow'
+        myColourCodes.push(letterColor) /// colour codes for player 2
       }
 
       rightGuess[letterPosition] = '#'
+
+      socket.emit('playerResponse', myColourCodes)
     }
 
     const delay = 250 * i
