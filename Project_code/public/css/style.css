@@ -82,9 +82,6 @@ h1 {
   .toast-message a,
   .toast-message label {
     color: #FFFFFF;
-<<<<<<< HEAD
-  }
-=======
   }
 
 .game-board_2 {
@@ -116,5 +113,42 @@ h1 {
 .objects{
   position: relative;
   top: 30px;
+  margin: auto;
 }
->>>>>>> fdb6f6dc2dbbb5920aeecb3588782c8fd7e6de9b
+
+
+
+
+html,body{
+  text-align: center;
+}
+
+.container{
+  margin:auto;
+}
+
+.window{
+  border: 5px solid #979292;
+  border-radius: 10px;
+  margin: 5vh 10vw;
+}
+
+.header{
+  border-bottom: 2px solid black;
+}
+
+.newRoom,.joinRoom{
+  margin: 4vh 1vw;
+}
+
+.controls,.leaderboard{
+  margin: 3vh 2vw;
+}
+
+.controls button{
+  margin: auto 4vw;
+}
+
+.leaderboard,.controls,#message{
+  display: none;
+}
