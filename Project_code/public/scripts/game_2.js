@@ -123,8 +123,6 @@ socket.on('color_board', (data)=>{
 })
 
 
-
-
 /// changing between states
 const gameState = new states()
 if (gameState.getcurrentState() == 'Menu') {

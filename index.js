@@ -41,7 +41,6 @@ io.on('connection', (socket) => {
         socket.join(roomID);        
         players[roomID]=data.name;
         socket.emit("newGame",{roomID:roomID});
-
     })
 
     //Join Game Listener
@@ -57,7 +56,6 @@ io.on('connection', (socket) => {
         guessesRemaining_: data.guessesRemaining
       })
     })
-
 })
 
 server.listen(3000, () => {
