@@ -21,32 +21,43 @@ const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
-const { addUser, removeUser, getUser, getUsersInRoom, availableRooms, getRooms } = require('../2022-group-lab-017/Project_code/public/scripts/users')
 
-// Create two player rooms
+//ALL player info
+let players={};
+let users = 0;
+let rightGuessString = "green";
+const randomstring = require('randomstring');
 
-const rooms = availableRooms(room_number)
-io.on('connection', function (socket) {
-  if (number_of_connectors === 2) {
-    room_number += 1
-    number_of_connectors = 0
-  }
-  socket.join('room' + room_number) /// simple trial of joining room one
-  io.to('room' + room_number).emit('connectToRoom', ' Welcome to room number' + room_number)
-  number_of_connectors += 1
-
-  // Listerning to player 2 events
-  socket.on('playerResponse', (arg) => {
-    console.log('room' + ' ' + room_number + arg) // world
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
   })
-})
+  socket.send(rightGuessString);
+   
+  //Create Game Listener
+    socket.on("createGame",(data)=>{
+        const roomID=randomstring.generate({length: 4});       
+        socket.join(roomID);        
+        players[roomID]=data.name;
+        socket.emit("newGame",{roomID:roomID});
 
-io.on('disconnect', function (socket) {
+    })
 
-  // check for available rooms
-})
-io.on('playerRespose', function (data) {
-  console.log('player respose' + data)
+    //Join Game Listener
+    socket.on("joinGame",(data)=>{        
+        socket.join(data.roomID);
+        socket.to(data.roomID).emit("player2Joined",{p2name: data.name,p1name:players[data.roomID]});
+        socket.emit("player1Joined",{p2name:players[data.roomID],p1name:data.name});
+    })
+    socket.on('colors', (data)=>{
+      console.log(data.colors, data.currentGuess, data.guessesRemaining)
+      socket.broadcast.emit('color_board', {
+        opponentGuess: data.currentGuess,
+        guessesRemaining_: data.guessesRemaining
+      })
+    })
+
 })
 
 server.listen(3000, () => {

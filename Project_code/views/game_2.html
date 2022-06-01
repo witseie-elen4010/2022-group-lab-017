@@ -9,15 +9,65 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/public/css/style.css">
-    <script src="/socket.io/socket.io.js"></script>
     <script src="/static/public/scripts/game_2.js" type="module"></script>
+    <script src="/index.js" type="module"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
 
-   
 </head>
 <body>
     <h1> Wordle Game </h1>
+
+
+    <div class="container" id="container">
+        <div class="window">
+            <div class="header">
+                <h1>Welcome To The WORDLE++ MULTIPLAYER GAME</h1>
+            </div>
+            <div class="body">
+                <div class="newRoom">
+                    <h4>Create a New Game</h4>
+                    <form onsubmit="return false">                        
+                        <input name="p1name" type="text" placeholder="your name here">
+                        <button class="createBtn btn btn-primary">Create</button>
+                    </form>
+                </div>
+                
+                <div class="joinRoom">
+                    <h4>Join an existing Game</h4>
+                    <form onsubmit="return false">                        
+                        <input name="p2name" type="text" placeholder="your name here">
+                        <input name="roomID" type="text" placeholder="room ID here">
+                        <button class="joinBtn btn btn-primary">Join</button>
+                    </form>
+                </div>
+
+                <!--<div class="leaderboard">
+                    <div class="player1">
+                        <h4 class="name">
+                            Player1 :                             
+                        </h4>
+                        <span>0</span>
+                        
+                    </div>
+                    <div class="player2">
+                        <h4 class="name">
+                            Player2:                             
+                        </h4>
+                        <span>0</span>
+                    </div>
+                </div>-->
+                <div id="message">
+                    Waiting for other player's choice...
+                </div>
+                <br>  
+            </div>
+        </div>
+    </div>
     
-<div class="objects">
+<div class="objects" id="objects">
     <div class="board" id="board">
         <div id="game-board" class="game-board">
             <h2> PLAYER </h2>
@@ -71,7 +121,6 @@ src="https://code.jquery.com/jquery-3.6.0.min.js"
 integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 
 <button onclick="info()">Info Message </button>
 <button id="word"> correctword </button>
