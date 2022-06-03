@@ -12,6 +12,14 @@ let roomID;
 let playerName_;
 let opponent1={name: "opponent1"};
 let opponent2={name: "opponent2"};
+
+/********************* */
+/*                     */
+/*   EVENTS HANDLER    */
+/*                     */
+/********************* */
+
+
 $("#objects").hide();
 
 socket.on("playerName1", (data)=>{
@@ -190,6 +198,25 @@ socket.on('color_board', (data)=>{
   }
 })
 
+
+//opponent winning message
+socket.on("won-message", (data)=>{
+  toastr.error(`${data.name} has got the correct word`, 'Game Over!!:',`The correct word is ${rightGuessString}`,{timeOut: 9000})
+  toastr.error(`The correct word is ${rightGuessString}`,{timeOut: 9000})
+})
+
+//opponent lossing message
+socket.on("lost-message", (data)=>{
+  toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
+})
+
+
+
+/********************* */
+/*                     */
+/*        GAME         */
+/*                     */
+/********************* */
 
 /// changing between states
 const gameState = new states()
@@ -414,6 +441,10 @@ function checkGuess () {
 
   if (guessString === rightGuessString) {
     toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
+    socket.emit("won", {
+      name: playerName_,
+      roomID: roomID,
+    })
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -425,6 +456,10 @@ function checkGuess () {
             setTimeout(function(){
               toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
             }
+            socket.emit("lost", {
+              name: playerName_,
+              roomID: roomID,
+            })
     }
   }
 

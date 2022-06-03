@@ -122,6 +122,20 @@ io.on('connection', (socket) => {
         guessesRemaining_: data.guessesRemaining,
       })
     })
+
+    socket.on("won", (data)=>{
+      console.log(data.name)
+      socket.to(data.roomID).emit("won-message", {
+        name: data.name,
+      })
+      
+    })
+
+    socket.on("lost", (data)=>{
+      socket.to(data.roomID).emit("lost-message", {
+        name: data.name,
+      })
+    })
 })
 
 server.listen(3000, () => {
