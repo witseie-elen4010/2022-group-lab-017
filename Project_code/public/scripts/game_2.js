@@ -4,6 +4,7 @@ import { WORDS } from '/static/public/scripts/words.js'
 
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
+let playerName_;
 
 const socket = io.connect('http://localhost:3000')
 
@@ -21,6 +22,7 @@ socket.on('word', (data)=>{
 $(".createBtn").click(function(){
     firstPlayer=true;
     const playerName=$("input[name=p1name").val();
+    playerName_ = playerName;
     socket.emit('createGame',{
       name:playerName,
     });
@@ -40,6 +42,7 @@ socket.on("newGame",(data)=>{
 $(".joinBtn").click(function(){
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
+    playerName_ = playerName;
     rightGuessString = randWord();
     console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
@@ -127,6 +130,18 @@ socket.on('color_board2', (data)=>{
     }, delay)
 
   }
+})
+
+
+//opponent winning message
+socket.on("won-message", (data)=>{
+  toastr.error(`${data.name} has got the correct word`, 'Game Over!!:',`The correct word is ${rightGuessString}`,{timeOut: 9000})
+  toastr.error(`The correct word is ${rightGuessString}`,{timeOut: 9000})
+})
+
+//opponent lossing message
+socket.on("lost-message", (data)=>{
+  toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
 })
 
 
@@ -332,6 +347,11 @@ function checkGuess () {
 
   if (guessString === rightGuessString) {
     toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
+    socket.emit("won", {
+      name: playerName_,
+      roomID: roomID,
+    })
+    console.log("won", playerName_, roomID)
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -343,6 +363,11 @@ function checkGuess () {
             setTimeout(function(){
               toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
             }
+            socket.emit("lost", {
+              name: playerName_,
+              roomID: roomID,
+            })
+
     }
   }
 
