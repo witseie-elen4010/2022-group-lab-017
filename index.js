@@ -24,7 +24,7 @@ const io = new Server(server)
 
 //ALL player info
 let players={};
-let rightGuessString = "green";
+let rightGuessString = "";
 let opponents = [];
 const randomstring = require('randomstring');
 
@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
+
   socket.send(rightGuessString);
    
   //Create Game Listener
@@ -41,7 +42,11 @@ io.on('connection', (socket) => {
         socket.join(roomID); 
         console.log(data.name, roomID)       
         players[roomID]=data.name;
-        socket.emit("newGame",{roomID:roomID});
+        //rightGuessString = data.word
+        socket.emit("newGame",{
+          roomID:roomID,
+          word: data.word,
+        });
         socket.to(roomID).emit('player1', {name: data.name})
         socket.emit('playerName1', {
           name: data.name,
@@ -76,6 +81,7 @@ io.on('connection', (socket) => {
           name: data.name,
           roomID: data.roomID,
         })
+        socket.to(data.roomID).emit('word', {word: data.word})
       })
 
     //Join Game Listener
@@ -97,6 +103,7 @@ io.on('connection', (socket) => {
         name: data.name,
         roomID: data.roomID,
       })
+      socket.to(data.roomID).emit('word', {word: data.word})
     })
 
     socket.on('colors', (data)=>{
@@ -109,8 +116,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('colors2', (data)=>{
-    console.log(data.colors, data.currentGuess, data.guessesRemaining)
-      socket.broadcast.emit('color_board2', {
+    console.log(data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      socket.to(data.roomID).emit('color_board2', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
       })

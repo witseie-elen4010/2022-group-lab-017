@@ -11,23 +11,28 @@ let firstPlayer=false;
 let roomID;
 $("#objects").hide();
 
+
+socket.on('word', (data)=>{
+  rightGuessString = data.word
+  console.log(data.word)
+})
+
 //Create Game Event Emitter
 $(".createBtn").click(function(){
     firstPlayer=true;
     const playerName=$("input[name=p1name").val();
-    socket.emit('createGame',{name:playerName});
+    socket.emit('createGame',{
+      name:playerName,
+    });
     console.log(playerName, roomID)
 })
-
-//get the word to be guessed from the server
-socket.on('message', function(data){
-  rightGuessString = data})
 
 //New Game Created Listener
 socket.on("newGame",(data)=>{
     $(".newRoom").hide();
     $(".joinRoom").hide();
     $("#message").html("Waiting for player 2, room ID is "+data.roomID).show();
+    console.log(rightGuessString)
     roomID=data.roomID;
 })
 
@@ -35,10 +40,12 @@ socket.on("newGame",(data)=>{
 $(".joinBtn").click(function(){
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
-    console.log(playerName, roomID)
+    rightGuessString = randWord();
+    console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
         name:playerName,
-        roomID:roomID
+        roomID:roomID,
+        word: rightGuessString,
     });
     $("#container").hide()
 })
@@ -320,6 +327,7 @@ function checkGuess () {
     currentGuess: currentGuess,
     colors: arrColor,
     guessesRemaining: guessesRemaining,
+    roomID: roomID,
   })
 
   if (guessString === rightGuessString) {

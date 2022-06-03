@@ -12,7 +12,6 @@ let roomID;
 let playerName_;
 let opponent1={name: "opponent1"};
 let opponent2={name: "opponent2"};
-let opponents= [];
 $("#objects").hide();
 
 socket.on("playerName1", (data)=>{
@@ -34,64 +33,6 @@ socket.emit("opponent", {
     roomID: roomID,
 })
 
-/*socket.on("opponent1", (data)=>{
-    if (opponent1==={}){
-        opponent1= {
-            name: data.name,
-            roomID: data.roomID
-        }
-        //console.log(opponent1)
-    }
-    else{
-        opponent2= {
-            name: data.name,
-            roomID: data.roomID
-        }
-        //console.log(opponent2)
-    }
-})
-
-socket.on("opponent2", (data)=>{
-    if (opponent1==={}){
-        opponent1= {
-            name: data.name,
-            roomID: data.roomID
-        }
-        //console.log(opponent1)
-    }
-    else{
-        opponent2= {
-            name: data.name,
-            roomID: data.roomID
-        } 
-        //console.log(opponent2)
-    }
-})
-socket.on("opponent3", (data)=>{
-    if (opponent1==={}){
-        opponent1= {
-            name: data.name,
-            roomID: data.roomID
-        }
-        //console.log(opponent1)
-    }
-    else{
-        opponent2= {
-            name: data.name,
-            roomID: data.roomID
-        } 
-        //console.log(opponent2)
-    }
-})*/
-
-/*socket.on('opponent', (data)=>{
-    opponents.push({
-        name: data.name,
-        roomID: data.roomID,
-    })
-})
-console.log(opponents)*/
-
 //Create Game Event Emitter
 $(".createBtn").click(function(){
     firstPlayer=true;
@@ -101,8 +42,10 @@ $(".createBtn").click(function(){
 })
 
 //get the word to be guessed from the server
-socket.on('message', function(data){
-  rightGuessString = data})
+socket.on('word', (data)=>{
+  rightGuessString = data.word
+  console.log(data.word)
+})
 
 //New Game Created Listener
 socket.on("newGame",(data)=>{
@@ -119,7 +62,7 @@ $(".joinBtn").click(function(){
     console.log(playerName, roomID)
     socket.emit('joinGame',{
         name:playerName,
-        roomID:roomID
+        roomID:roomID,
     });
 })
 
@@ -127,10 +70,12 @@ $(".joinBtn").click(function(){
 $(".joinBtn2").click(function(){
     const playerName=$("input[name=p3name").val();
     roomID=$("input[name=roomID3").val();
-    console.log(playerName, roomID)
+    rightGuessString = randWord();
+    console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame3',{
         name:playerName,
-        roomID:roomID
+        roomID:roomID,
+        word: rightGuessString,
     });
     $("#container").hide()
 })
