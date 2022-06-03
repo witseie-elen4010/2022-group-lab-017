@@ -14,14 +14,14 @@ h1 {
   align-items: center;
   flex-direction: row;
   position: relative;
-  left: 600px;
+  left: 330px;
 }
 .game-board {
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
-    right: 30px;
+    left: 60px;
   }
   
 .letter-box {
@@ -88,8 +88,8 @@ h1 {
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative;
-  left: 60px;
+  /*position: relative;
+  left: 60px;*/
 }
 
 .letter-box2 {
@@ -110,13 +110,37 @@ h1 {
   display: flex;
 }
 
+.game-board_3 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  left: 120px;
+}
+
+.letter-box3 {
+  border: 2px solid yellow;
+  border-radius: 3px;
+  margin: 2px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.letter-row3 {
+  display: flex;
+}
+
 .objects{
   position: relative;
   top: 30px;
   margin: auto;
 }
-
-
 
 
 html,body{
@@ -139,16 +163,4 @@ html,body{
 
 .newRoom,.joinRoom{
   margin: 4vh 1vw;
-}
-
-.controls,.leaderboard{
-  margin: 3vh 2vw;
-}
-
-.controls button{
-  margin: auto 4vw;
-}
-
-.leaderboard,.controls,#message{
-  display: none;
 }
