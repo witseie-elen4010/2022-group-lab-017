@@ -107,6 +107,14 @@ io.on('connection', (socket) => {
         name: data.name,
       })
     })
+
+    socket.on('colors2', (data)=>{
+    console.log(data.colors, data.currentGuess, data.guessesRemaining)
+      socket.broadcast.emit('color_board2', {
+        opponentGuess: data.currentGuess,
+        guessesRemaining_: data.guessesRemaining,
+      })
+    })
 })
 
 server.listen(3000, () => {

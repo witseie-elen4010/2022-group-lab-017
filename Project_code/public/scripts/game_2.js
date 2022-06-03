@@ -79,7 +79,7 @@ $(".controls button").click(function (){
 })
 
 //color the keyBoard of the opponent colour_board
-socket.on('color_board', (data)=>{
+socket.on('color_board2', (data)=>{
   console.log(data.opponentGuess, data.guessesRemaining_)
   const row = document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_]
   const rightGuess = Array.from(rightGuessString)
@@ -172,7 +172,7 @@ function randWord(){
 }
 
 function initBoard () {
-  const board = document.getElementById('game-board')
+  const board = document.getElementById('game-board_')
 
   for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
     const row = document.createElement('div')
@@ -188,7 +188,7 @@ function initBoard () {
   }
 }
 function initBoard_2 () {
-  const board = document.getElementById('game-board_2')
+  const board = document.getElementById('game-board_2_')
 
   for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
     const row = document.createElement('div')
@@ -315,7 +315,8 @@ function checkGuess () {
       shadeKeyBoard(letter, letterColor)
     }, delay)
   }
-  socket.emit('colors', {
+
+  socket.emit('colors2', {
     currentGuess: currentGuess,
     colors: arrColor,
     guessesRemaining: guessesRemaining,
