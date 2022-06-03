@@ -38,19 +38,21 @@ exports.login = (req, res, next) => {
       .then((pool) => {
         return pool.request()
           // Check if username entered exists in the database
-          .input('userEmail', db.sql.Char, user.user_email)
+          .input('userEmail', db.sql.Char, user.userName)
           .query('SELECT * FROM Users WHERE Email = @userEmail')
       })
       .then(result => {
+        console.log(result)
         if (result.recordset.length === 0) {
           const alert = 'Username entered does not exist'
           console.log("User does not exist")
+          res.redirect('/')
         } else {
           db.pools
             .then((pool) => {
               return pool.request()
                 // Extract database password to compare with login password
-                .input('userEmail', db.sql.Char, user.user_email)
+                .input('userEmail', db.sql.Char, user.userName)
                 .query('SELECT * FROM Users WHERE Email = @userEmail')
             })
             .then(result => {
@@ -62,11 +64,42 @@ exports.login = (req, res, next) => {
                   const alert = 'Username entered does not exist'
                   console.log(alert)
                 } else {
+                      const userID = result.recordset[0].Personid.toString()
+                      const userIdName = userID + user.userName
+                      const randomCharacter = 'qwerty'
+                      res.cookie('user', { username: user.userName, userId: userID }, {
+                         maxAge: 60000 * 60 * 24, // cookie duration is one day
+                         httpOnly: false,
+                         secure: false
+                    })
                       console.log('login successfull')
-                      res.redirect('/game')
+                      res.redirect('/main_menu')
+                      db.pools
+                      .then((pool) => {
+                        const online_status = 'Online'
+                        return pool.request()
+                          .input('Online_Status', db.sql.Char, online_status)
+                          .input('userEmail', db.sql.Char, user.userName)
+                          .query('UPDATE Users SET Online_Status = @Online_Status WHERE Email = @userEmail')
+                      })
                     }
                 })
             })
         }
   })
+}
+
+exports.logout = (req, res, next) => {
+  const userID = req.cookies.user.userId
+  db.pools
+  .then((pool) => {
+    const online_status = 'Offline'
+    return pool.request()
+      .input('Online_Status', db.sql.Char, online_status)
+      .input('User_Id', db.sql.Char, userID)
+      .query('UPDATE Users SET Online_Status = @Online_Status WHERE Personid = @User_Id')
+  })
+
+  res.clearCookie('user')
+  res.redirect('/')
 }
