@@ -103,6 +103,7 @@ io.on('connection', (socket) => {
         name: data.name,
         roomID: data.roomID,
       })
+      socket.to(data.roomID).emit('word', {word: data.word})
     })
 
     socket.on('colors', (data)=>{

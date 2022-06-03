@@ -40,7 +40,7 @@ socket.on("newGame",(data)=>{
 $(".joinBtn").click(function(){
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
-    rightGuessString = randWord(),
+    rightGuessString = randWord();
     console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
         name:playerName,
