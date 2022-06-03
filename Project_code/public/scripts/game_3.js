@@ -186,7 +186,7 @@ socket.on('color_board', (data)=>{
     {
        opponent1 = {
            name: data.name
-       }
+       } 
     }
     else if (opponent1.name!== data.name && opponent2.name !==data.name)
     {
