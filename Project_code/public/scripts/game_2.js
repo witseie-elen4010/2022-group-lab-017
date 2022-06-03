@@ -5,6 +5,7 @@ import { WORDS } from '/static/public/scripts/words.js'
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
 let playerName_;
+var players=[];
 
 const socket = io.connect('http://localhost:3000')
 
@@ -23,6 +24,9 @@ $(".createBtn").click(function(){
     firstPlayer=true;
     const playerName=$("input[name=p1name").val();
     playerName_ = playerName;
+    players.push(playerName);
+    //const pl1 = document.getElementById('player');
+    //pl1.textContent = players[0];
     socket.emit('createGame',{
       name:playerName,
     });
@@ -43,6 +47,7 @@ $(".joinBtn").click(function(){
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
     playerName_ = playerName;
+    players.push(playerName_);
     rightGuessString = randWord();
     console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
@@ -90,6 +95,7 @@ $(".controls button").click(function (){
 
 //color the keyBoard of the opponent colour_board
 socket.on('color_board2', (data)=>{
+  console.log(data.rightGuessString);
   console.log(data.opponentGuess, data.guessesRemaining_)
   const row = document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_]
   const rightGuess = Array.from(rightGuessString)
@@ -136,8 +142,9 @@ socket.on('color_board2', (data)=>{
 //opponent winning message
 socket.on("won-message", (data)=>{
   toastr.error(`${data.name} has got the correct word`, 'Game Over!!:',`The correct word is ${rightGuessString}`,{timeOut: 9000})
-  toastr.error(`The correct word is ${rightGuessString}`,{timeOut: 9000})
-})
+    setTimeout(function(){
+      toastr.error(`The correct word is ${rightGuessString}`,{timeOut: 90000})}, 3000)           
+    })
 
 //opponent lossing message
 socket.on("lost-message", (data)=>{
@@ -165,7 +172,6 @@ window.onload =function(){
     initBoard_2();
     GameLoop();
     correct();
-    resert();
 }
 
 function correct(){
@@ -173,19 +179,6 @@ function correct(){
   button.onclick = function() {
       toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
   }
-}
-
-function resert(){
-       
-        var button = document.getElementById("restart");
-        button.onclick = function() {
-        rightGuessString = randWord();
-        guessesRemaining = NUMBER_OF_GUESSES;
-        clearTable();
-        nextLetter = 0;
-        currentGuess.length = 0
-        toastr.info('Game restarted!',{timeOut: 3000})
-    }
 }
 
 function randWord(){
@@ -285,6 +278,7 @@ function checkGuess () {
   let guessString = ''
   const rightGuess = Array.from(rightGuessString)
 
+
   for (const val of currentGuess) {
     guessString += val
   }
@@ -361,12 +355,12 @@ function checkGuess () {
     if (guessesRemaining === 0) {
             toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
             setTimeout(function(){
-              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
-            }
+            toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
             socket.emit("lost", {
               name: playerName_,
               roomID: roomID,
             })
+        }
 
     }
   }
@@ -384,7 +378,6 @@ function insertLetter (pressedKey) {
   box.classList.add('filled-box')
   currentGuess.push(pressedKey)
   nextLetter += 1
-
 
 }
 

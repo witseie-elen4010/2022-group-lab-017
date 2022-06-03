@@ -238,7 +238,6 @@ window.onload =function(){
     initBoard_2();
     initBoard_3();
     GameLoop();
-    correct();
     resert();
 }
 
@@ -247,19 +246,6 @@ function correct(){
   button.onclick = function() {
       toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
   }
-}
-
-function resert(){
-       
-        var button = document.getElementById("restart");
-        button.onclick = function() {
-        rightGuessString = randWord();
-        guessesRemaining = NUMBER_OF_GUESSES;
-        clearTable();
-        nextLetter = 0;
-        currentGuess.length = 0
-        toastr.info('Game restarted!',{timeOut: 3000})
-    }
 }
 
 function randWord(){
@@ -452,14 +438,14 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
-            setTimeout(function(){
-              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
-            }
-            socket.emit("lost", {
-              name: playerName_,
-              roomID: roomID,
-            })
+      toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
+      setTimeout(function(){
+      toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
+      socket.emit("lost", {
+        name: playerName_,
+        roomID: roomID,
+      })
+     }
     }
   }
 

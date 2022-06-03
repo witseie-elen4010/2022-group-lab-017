@@ -24,6 +24,7 @@ const io = new Server(server)
 
 //ALL player info
 let players={};
+let boards={};
 let rightGuessString = "";
 let opponents = [];
 const randomstring = require('randomstring');
@@ -129,6 +130,12 @@ io.on('connection', (socket) => {
         name: data.name,
       })
       
+    })
+
+    socket.on("names", (data)=>{
+      socket.to(data.roomID).emit("setnames", {
+        name: data.name,
+      })
     })
 
     socket.on("lost", (data)=>{
