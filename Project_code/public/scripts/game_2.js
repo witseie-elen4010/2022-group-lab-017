@@ -361,13 +361,12 @@ function checkGuess () {
     if (guessesRemaining === 0) {
             toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
             setTimeout(function(){
-              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
+              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)  
+              socket.emit("lost", {
+                name: playerName_,
+                roomID: roomID,
+              })          
             }
-            socket.emit("lost", {
-              name: playerName_,
-              roomID: roomID,
-            })
-
     }
   }
 
