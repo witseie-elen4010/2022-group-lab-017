@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HistoryLog</title>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/public/scripts/history_2.js" type="module"></script>
+    <script src="/index.js" type="module"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
+    <link rel="stylesheet" href="static/public/css/main_menu.css" />
+    <link rel="stylesheet" href="static/public/css/style.css" />
+</head>
+<body>
+<h1 class="h1">Wordle History Log:</h1>
+<button id="history1"> Single Player </button>
+<button id="history2"> Two Player </button>
+<button id="history3"> Three Player </button>
+</body>
+</html>
