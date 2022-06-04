@@ -26,8 +26,6 @@ const io = new Server(server)
 
 //ALL player info
 let players={};
-let rightGuessString = "";
-let opponents = [];
 const randomstring = require('randomstring');
 
 io.on('connection', (socket) => {
@@ -35,8 +33,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected')
   })
-
-  socket.send(rightGuessString);
    
   //Create Game Listener
     socket.on("createGame",(data)=>{
@@ -54,32 +50,15 @@ io.on('connection', (socket) => {
           name: data.name,
           roomID: roomID,
         })
-        socket.to(roomID).emit('opponent1', {
-          name: data.name,
-          roomID: roomID,
-        })
-        socket.to(roomID).emit("opponent", {
-          name: data.name,
-          roomID: roomID,
-        })
     })
 
     //Join Game Listener
     socket.on("joinGame",(data)=>{        
         socket.join(data.roomID);
         console.log(data.name, data.roomID)
-        socket.to(data.roomID).emit("player2Joined",{p2name: data.name,p1name:players[data.roomID]});
-        socket.emit("player1Joined",{p2name:players[data.roomID],p1name:data.name});
-        socket.to(data.roomID).emit('player2', {name: data.name})
+        socket.to(data.roomID).emit("Joined_",{});
+        socket.emit("IJoined_",{});
         socket.emit('playerName2', {
-          name: data.name,
-          roomID: data.roomID,
-        })
-        socket.to(data.roomID).emit('opponent2', {
-          name: data.name,
-          roomID: data.roomID,
-        })
-        socket.to(data.roomID).emit("opponent", {
           name: data.name,
           roomID: data.roomID,
         })
@@ -90,22 +69,13 @@ io.on('connection', (socket) => {
     socket.on("joinGame3",(data)=>{        
       socket.join(data.roomID);
       console.log(data.name, data.roomID)
-      socket.to(data.roomID).emit("player3Joined",{p2name: data.name,p1name:players[data.roomID]});
-      socket.emit("player2Joined",{p2name:players[data.roomID],p1name:data.name});
-      socket.to(data.roomID).emit('player3', {name: data.name})
+      socket.to(data.roomID).emit("Joined",{});
+      socket.emit("IJoined",{});
       socket.emit('playerName3', {
         name: data.name,
         roomID: data.roomID,
       })
-      socket.to(data.roomID).emit('opponent3', {
-        name: data.name,
-        roomID: data.roomID,
-      })
-      socket.to(data.roomID).emit("opponent", {
-        name: data.name,
-        roomID: data.roomID,
-      })
-      socket.to(data.roomID).emit('word', {word: data.word})
+      socket.to(data.roomID).emit('word', {word: data.word,})
     })
 
     socket.on('colors', (data)=>{

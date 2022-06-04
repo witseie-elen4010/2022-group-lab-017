@@ -7,7 +7,6 @@ let rightGuessString = ""
 
 const socket = io.connect('http://localhost:3000')
 
-let firstPlayer=false;
 let roomID;
 let playerName_;
 let opponent1={name: "opponent1"};
@@ -26,24 +25,33 @@ socket.on("playerName1", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
     console.log(data.roomID)
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
 socket.on("playerName2", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
 socket.on("playerName3", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
-})
-
-socket.emit("opponent", {
-    name: playerName_,
-    roomID: roomID,
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
 
 //Create Game Event Emitter
 $(".createBtn").click(function(){
-    firstPlayer=true;
     const playerName=$("input[name=p1name").val();
     socket.emit('createGame',{name:playerName});
     console.log(playerName, roomID)
@@ -72,6 +80,9 @@ $(".joinBtn").click(function(){
         name:playerName,
         roomID:roomID,
     });
+    $(".newRoom").hide();
+    $(".joinRoom").hide();
+    $("#message").html("Waiting  opponent 2 to join, room ID is "+ roomID).show();
 })
 
 //Join Game Event Emitter
@@ -88,47 +99,15 @@ $(".joinBtn2").click(function(){
     $("#container").hide()
 })
 
-//Player 2 Joined
-socket.on("player2Joined",(data)=>{
-    transition(data);
+//this displays the game after player three has jounined
+socket.on("IJoined",(data)=>{
     $("#container").hide()
     $("#objects").show();
   })
 
-//player 3 joined
-socket.on("player3Joined",(data)=>{
-    transition(data);
+socket.on("Joined",()=>{
     $("#container").hide()
     $("#objects").show();
-  })
-
-  
-//Player 1 Joined
-socket.on("player1Joined",(data)=>{
-    transition(data)  ;
-    $("#container").hide()
-    $("#objects").show();
-})
-
-const transition=(data)=>{
-  $(".newRoom").hide();
-  $(".joinRoom").hide();
-  $(".leaderboard").hide();
-  $(".controls").hide();
-  $(".player1 .name").html(data.p1name);
-  $(".player2 .name").html(data.p2name);
-  $(".player3 .name").html(data.p3name);
-  $("#message").html(data.p2name+" is here!").hide();
-  $("#objects").show();
-}
-//Select Choice
-$(".controls button").click(function (){
-  const guess=$(this).html().trim();
-  const guessEvent=firstPlayer?"guess1":"guess2";
-  socket.emit(guessEvent,{
-      guess: guess,
-      roomID:roomID
-  });
 })
 
 //color the keyBoard of the opponent colour_board
@@ -140,12 +119,22 @@ socket.on('color_board', (data)=>{
        opponent1 = {
            name: data.name
        } 
+      const board = document.getElementById("game-board_2")
+      const tag = document.createElement("h2")
+      tag.innerHTML = data.name
+      tag.id = "opponent1";
+      board.appendChild(tag)
     }
     else if (opponent1.name!== data.name && opponent2.name !==data.name)
     {
         opponent2 = {
             name: data.name
         }
+        const board = document.getElementById("game-board_3")
+        const tag = document.createElement("h2")
+        tag.innerHTML = data.name
+        tag.id = "opponent2"
+        board.appendChild(tag)
     }
 
    if (opponent1.name===data.name)
