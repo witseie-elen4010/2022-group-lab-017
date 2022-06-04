@@ -109,10 +109,13 @@ io.on('connection', (socket) => {
       })
     })
 
+    //this part listens to players events which refused to choose a word to to guessed for the three player game
     socket.on("my-decision", (data)=>{
       socket.to(data.roomID).emit("decisions", {decision: data.decision})
       console.log(data.decision)
     })
+
+    //this part listens to an event when a player has submitted a word to be guessed
     socket.on("play", (data)=>{
       socket.to(data.roomID).emit("word-set", {
         word: data.word,
@@ -121,11 +124,13 @@ io.on('connection', (socket) => {
       console.log("word set by: ", data.name, data.word)
     })
 
+    //this part listens to an event when the other two players refused to choose a word to to guessed for the three player game
     socket.on("two-cancels", (data)=>{
       socket.to(data.roomID).emit("play-game", {decision: data.decision})
     })
 })
 
+//this part listens to there port
 server.listen(3000, () => {
   console.log(' server listening on *:3000')
 })
