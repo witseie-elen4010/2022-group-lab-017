@@ -189,3 +189,18 @@ html,body{
 .newRoom,.joinRoom{
   margin: 4vh 1vw;
 }
+
+#message{
+  color: red;
+  background-color: white;
+}
+
+
+#player, #opponent1, #opponent2{
+  position: relative;
+  bottom: 400px;
+  color: RED;
+}
+
+
+
