@@ -108,6 +108,22 @@ io.on('connection', (socket) => {
         name: data.name,
       })
     })
+
+    socket.on("my-decision", (data)=>{
+      socket.to(data.roomID).emit("decisions", {decision: data.decision})
+      console.log(data.decision)
+    })
+    socket.on("play", (data)=>{
+      socket.to(data.roomID).emit("word-set", {
+        word: data.word,
+        name: data.name
+      })
+      console.log("word set by: ", data.name, data.word)
+    })
+
+    socket.on("two-cancels", (data)=>{
+      socket.to(data.roomID).emit("play-game", {decision: data.decision})
+    })
 })
 
 server.listen(3000, () => {
