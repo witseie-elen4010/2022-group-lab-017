@@ -31,4 +31,8 @@ mainRouter.get('/invitePlayer', function (req, res) {
   res.sendFile(path.join(__dirname, '../../views', 'invite_player.html'))
 })
 
+mainRouter.get('/historyLog2', function (req, res) {
+  res.sendFile(path.join(__dirname, '../../views', 'historyLog_2.html'))
+})
+
 module.exports = mainRouter

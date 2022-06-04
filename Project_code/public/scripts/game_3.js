@@ -7,6 +7,7 @@ let rightGuessString = ""
 
 const socket = io.connect('http://localhost:3000')
 
+
 let firstPlayer=false;
 let roomID;
 let playerName_;

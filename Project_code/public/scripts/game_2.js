@@ -16,7 +16,7 @@ $("#objects").hide();
 
 socket.on('word', (data)=>{
   rightGuessString = data.word
-  console.log(data.word)
+  //console.log(data.word)
 })
 
 //Create Game Event Emitter
@@ -25,12 +25,10 @@ $(".createBtn").click(function(){
     const playerName=$("input[name=p1name").val();
     playerName_ = playerName;
     players.push(playerName);
-    //const pl1 = document.getElementById('player');
-    //pl1.textContent = players[0];
     socket.emit('createGame',{
       name:playerName,
     });
-    console.log(playerName, roomID)
+   // console.log(playerName, roomID)
 })
 
 //New Game Created Listener
@@ -38,7 +36,6 @@ socket.on("newGame",(data)=>{
     $(".newRoom").hide();
     $(".joinRoom").hide();
     $("#message").html("Waiting for player 2, room ID is "+data.roomID).show();
-    console.log(rightGuessString)
     roomID=data.roomID;
 })
 
@@ -49,7 +46,7 @@ $(".joinBtn").click(function(){
     playerName_ = playerName;
     players.push(playerName_);
     rightGuessString = randWord();
-    console.log(playerName, roomID, rightGuessString)
+    //console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
         name:playerName,
         roomID:roomID,
@@ -95,8 +92,8 @@ $(".controls button").click(function (){
 
 //color the keyBoard of the opponent colour_board
 socket.on('color_board2', (data)=>{
-  console.log(data.rightGuessString);
-  console.log(data.opponentGuess, data.guessesRemaining_)
+  //console.log(data.rightGuessString); undefined
+  //console.log(data.opponentGuess, data.guessesRemaining_)
   const row = document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_]
   const rightGuess = Array.from(rightGuessString)
   for (let i=0; i<5; i++)
@@ -156,7 +153,7 @@ socket.on("lost-message", (data)=>{
 const gameState = new states()
 if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
-  console.log(gameState.getcurrentState())
+  //console.log(gameState.getcurrentState())
 }
 
 const NUMBER_OF_GUESSES = 6
@@ -345,7 +342,7 @@ function checkGuess () {
       name: playerName_,
       roomID: roomID,
     })
-    console.log("won", playerName_, roomID)
+   /// console.log("won", playerName_, roomID)
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -433,5 +430,5 @@ function clearTable(){
 
 document.getElementById("Enter").addEventListener('click', ()=>{
   socket.emit("guess1", currentGuess)
-  console.log(currentGuess)
+ // console.log(currentGuess)
 })

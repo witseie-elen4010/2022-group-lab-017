@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
     socket.on("createGame",(data)=>{
         const roomID=randomstring.generate({length: 4});    
         socket.join(roomID); 
-        console.log(data.name, roomID)       
+        //console.log(data.name, roomID)       
         players[roomID]=data.name;
         //rightGuessString = data.word
         socket.emit("newGame",{
@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
     //Join Game Listener
     socket.on("joinGame",(data)=>{        
         socket.join(data.roomID);
-        console.log(data.name, data.roomID)
+        //console.log(data.name, data.roomID)
         socket.to(data.roomID).emit("player2Joined",{p2name: data.name,p1name:players[data.roomID]});
         socket.emit("player1Joined",{p2name:players[data.roomID],p1name:data.name});
         socket.to(data.roomID).emit('player2', {name: data.name})
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
     //Join Game Listener
     socket.on("joinGame3",(data)=>{        
       socket.join(data.roomID);
-      console.log(data.name, data.roomID)
+      //console.log(data.name, data.roomID)
       socket.to(data.roomID).emit("player3Joined",{p2name: data.name,p1name:players[data.roomID]});
       socket.emit("player2Joined",{p2name:players[data.roomID],p1name:data.name});
       socket.to(data.roomID).emit('player3', {name: data.name})
@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('colors', (data)=>{
-      console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      //console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
@@ -117,7 +117,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('colors2', (data)=>{
-    console.log(data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      //console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board2', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
@@ -125,17 +125,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on("won", (data)=>{
-      console.log(data.name)
+      //console.log(data.name)
       socket.to(data.roomID).emit("won-message", {
         name: data.name,
       })
       
-    })
-
-    socket.on("names", (data)=>{
-      socket.to(data.roomID).emit("setnames", {
-        name: data.name,
-      })
     })
 
     socket.on("lost", (data)=>{
@@ -146,5 +140,5 @@ io.on('connection', (socket) => {
 })
 
 server.listen(3000, () => {
-  console.log(' server listening on *:3000')
+  //console.log(' server listening on *:3000')
 })
