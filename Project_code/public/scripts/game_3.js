@@ -9,6 +9,7 @@ const socket = io.connect('http://localhost:3000')
 
 let roomID;
 let playerName_;
+let decisions = 0;
 let opponent1={name: "opponent1"};
 let opponent2={name: "opponent2"};
 
@@ -20,6 +21,8 @@ let opponent2={name: "opponent2"};
 
 
 $("#objects").hide();
+$("#word-div").hide();
+$("#wait").hide();
 
 socket.on("playerName1", (data)=>{
     playerName_ = data.name
@@ -61,6 +64,7 @@ $(".createBtn").click(function(){
 socket.on('word', (data)=>{
   rightGuessString = data.word
   console.log(data.word)
+  $("#word-div").show();
 })
 
 //New Game Created Listener
@@ -97,17 +101,19 @@ $(".joinBtn2").click(function(){
         word: rightGuessString,
     });
     $("#container").hide()
+    $("#word-div").show()
+    $("#wait").hide()
 })
 
 //this displays the game after player three has jounined
 socket.on("IJoined",(data)=>{
     $("#container").hide()
-    $("#objects").show();
+    $("#wait").hide();
   })
 
 socket.on("Joined",()=>{
     $("#container").hide()
-    $("#objects").show();
+    $("#wait").hide();
 })
 
 //color the keyBoard of the opponent colour_board
@@ -183,10 +189,8 @@ socket.on('color_board', (data)=>{
       box.style.backgroundColor = letterColor
       shadeKeyBoard(letter, letterColor)
     }, delay)
-
   }
 })
-
 
 //opponent winning message
 socket.on("won-message", (data)=>{
@@ -199,6 +203,69 @@ socket.on("lost-message", (data)=>{
   toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
 })
 
+
+/***********************/
+/*                     */
+/*  WORD FORM          */
+/*  LISTENERS          */
+/***********************/
+
+document.getElementById("cancel").addEventListener('click', ()=>{
+  $("#word-div").hide();
+  $("#wait").show();
+  socket.emit("my-decision", {
+    roomID: roomID,
+    decision: 1,
+  })
+})
+
+document.getElementById("submit").addEventListener("click", ()=>{
+  socket.emit("play", {
+    roomID: roomID,
+    word: $("#word-set").val(),
+    name: playerName_,
+  });
+  rightGuessString = $("#word-set").val(), 
+  $("#word-div").hide();
+  $("#wait").hide();
+  $("#objects").show();
+  $("#game-board").hide();
+  $(".keyboard").hide();
+})
+
+socket.on('decisions', (data)=>{
+  decisions += data.decision;
+  console.log(playerName_,decisions, data.decision)
+  if (decisions === 2)
+  {
+    $("#word-div").hide();
+    $("#wait").hide();
+    $("#objects").show()
+    socket.emit("two-cancels", {
+      decision: 2,
+      roomID: roomID,
+    })
+  }
+})
+
+socket.on("play-game", (data)=>{
+  if (data.decision===2)
+  {
+    $("#word-div").hide();
+    $("#wait").hide();
+    $("#objects").show();
+  } 
+})
+
+socket.on('word-set', (data)=>{
+  rightGuessString = data.word;
+  toastr.info(`${data.name} SET THE WORD TO BE GUESSED`, {timeOut: 30000})
+  toastr.info(`HE IS NOT PART OF THE GAME`, {timeOut: 30000}) 
+  opponent1 = data.name;
+  $("#word-div").hide();
+  $("#wait").hide();
+  $("#objects").show()
+})
 
 
 /********************* */
