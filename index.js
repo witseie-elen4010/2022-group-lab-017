@@ -39,7 +39,6 @@ io.on('connection', (socket) => {
         socket.join(roomID); 
         console.log(data.name, roomID)       
         players[roomID]=data.name;
-        //rightGuessString = data.word
         socket.emit("newGame",{
           roomID:roomID,
           word: data.word,
@@ -59,6 +58,8 @@ io.on('connection', (socket) => {
         console.log(data.name, data.roomID)
         socket.to(data.roomID).emit("Joined_",{});
         socket.emit("IJoined_",{});
+
+        //emit an event with the player name and room ID
         socket.emit('playerName2', {
           name: data.name,
           roomID: data.roomID,

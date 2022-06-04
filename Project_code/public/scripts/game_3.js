@@ -24,6 +24,7 @@ $("#objects").hide();
 $("#word-div").hide();
 $("#wait").hide();
 
+//takes care of the players name
 socket.on("playerName1", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
@@ -34,6 +35,8 @@ socket.on("playerName1", (data)=>{
     tag.id = "player"
     board.appendChild(tag)
 })
+
+//takes care of the players name
 socket.on("playerName2", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
@@ -43,6 +46,8 @@ socket.on("playerName2", (data)=>{
     tag.id = "player"
     board.appendChild(tag)
 })
+
+//takes care of the players name
 socket.on("playerName3", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
@@ -110,7 +115,6 @@ socket.on("IJoined",(data)=>{
     $("#container").hide()
     $("#wait").hide();
   })
-
 socket.on("Joined",()=>{
     $("#container").hide()
     $("#wait").hide();
@@ -485,6 +489,7 @@ function checkGuess () {
   }
 
 
+  //emits guess information
   socket.emit('colors', {
     name: playerName_,
     currentGuess: currentGuess,
@@ -496,7 +501,7 @@ function checkGuess () {
 
 
   if (guessString === rightGuessString) {
-    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
+    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 6000})
     socket.emit("won", {
       name: playerName_,
       roomID: roomID,
@@ -508,7 +513,7 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
+            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 6000})
             setTimeout(function(){
               toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)     
               socket.emit("lost", {
