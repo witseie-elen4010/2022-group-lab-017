@@ -78,6 +78,7 @@ io.on('connection', (socket) => {
       socket.to(data.roomID).emit('word', {word: data.word,})
     })
 
+    //this part listens to an event when a player has made a guess for the the two player game
     socket.on('colors', (data)=>{
       console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board', {
@@ -87,6 +88,7 @@ io.on('connection', (socket) => {
       })
     })
 
+    //this part listens to an event when a player has made a guess for the the two player game
     socket.on('colors2', (data)=>{
     console.log(data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board2', {
@@ -95,6 +97,7 @@ io.on('connection', (socket) => {
       })
     })
 
+    //this part listens an event when a player has won the game
     socket.on("won", (data)=>{
       console.log(data.name)
       socket.to(data.roomID).emit("won-message", {
@@ -103,6 +106,7 @@ io.on('connection', (socket) => {
       
     })
 
+    //this part listens to an event when a player has lost
     socket.on("lost", (data)=>{
       socket.to(data.roomID).emit("lost-message", {
         name: data.name,
