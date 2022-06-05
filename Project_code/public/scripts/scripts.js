@@ -1,3 +1,4 @@
+'use strict'
 import { WORDS } from '../scripts/words.js'
 import { states } from '../scripts/gameStates.js'
 
@@ -7,7 +8,6 @@ if (gameState.getcurrentState() == 'Menu') {
   // show player multi player options
   console.log(gameState.getcurrentState())
 }
-
 
 //
 const NUMBER_OF_GUESSES = 6
@@ -249,14 +249,13 @@ function clearTable () {
       box.classList.remove('filled-box')
       box.style.backgroundColor = ''
     }
-
   }
 }
 
-/********************* */
+/** ******************* */
 /*                     */
-/*ExpotFfunctionsToTest*/
+/* ExpotFfunctionsToTest */
 /*                     */
-/********************* */
+/** ******************* */
 
 module.exports = gameState

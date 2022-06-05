@@ -1,3 +1,4 @@
+'use strict'
 function getOption () {
   selectElement = document.querySelector('#select1')
   output = selectElement.options[selectElement.selectedIndex].text
