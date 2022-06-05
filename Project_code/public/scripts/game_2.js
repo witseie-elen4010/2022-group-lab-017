@@ -1,91 +1,86 @@
-
+'use stricts'
 import { states } from '../scripts/gameStates.js'
 import { WORDS } from '/static/public/scripts/words.js'
 
-//let rightGuessString_1 = randWord();
-let rightGuessString = ""
-let playerName_;
-var players=[];
+// let rightGuessString_1 = randWord();
+let rightGuessString = ''
+let playerName_
+const players = []
 
 const socket = io.connect('http://localhost:3000')
 
-let firstPlayer=false;
-let roomID;
-$("#objects").hide();
+let firstPlayer = false
+let roomID
+$('#objects').hide()
 
-
-socket.on('word', (data)=>{
+socket.on('word', (data) => {
   rightGuessString = data.word
   console.log(data.word)
 })
 
-//Create Game Event Emitter
-$(".createBtn").click(function(){
-  if($("input[name=p1name").val() !=="")
-  {
-    firstPlayer=true;
-    const playerName=$("input[name=p1name").val();
-    playerName_ = playerName;
-    players.push(playerName);
-    //const pl1 = document.getElementById('player');
-    //pl1.textContent = players[0];
-    socket.emit('createGame',{
-      name:playerName,
-    });
+// Create Game Event Emitter
+$('.createBtn').click(function () {
+  if ($('input[name=p1name').val() !== '') {
+    firstPlayer = true
+    const playerName = $('input[name=p1name').val()
+    playerName_ = playerName
+    players.push(playerName)
+    // const pl1 = document.getElementById('player');
+    // pl1.textContent = players[0];
+    socket.emit('createGame', {
+      name: playerName
+    })
     console.log(playerName, roomID)
   }
 })
 
-//New Game Created Listener
-socket.on("newGame",(data)=>{
-    $(".newRoom").hide();
-    $(".joinRoom").hide();
-    $("#message").html("Waiting for player 2, room ID is "+data.roomID).show();
-    console.log(rightGuessString)
-    roomID=data.roomID;
+// New Game Created Listener
+socket.on('newGame', (data) => {
+  $('.newRoom').hide()
+  $('.joinRoom').hide()
+  $('#message').html('Waiting for player 2, room ID is ' + data.roomID).show()
+  console.log(rightGuessString)
+  roomID = data.roomID
 })
 
-//Join Game Event Emitter
-$(".joinBtn").click(function(){
-
-  if ($("input[name=p2name").val() !== "" && $("input[name=roomID").val() !== "")
-  {
-    const playerName=$("input[name=p2name").val();
-    roomID=$("input[name=roomID").val();
-    playerName_ = playerName;
-    players.push(playerName_);
-    rightGuessString = randWord();
+// Join Game Event Emitter
+$('.joinBtn').click(function () {
+  if ($('input[name=p2name').val() !== '' && $('input[name=roomID').val() !== '') {
+    const playerName = $('input[name=p2name').val()
+    roomID = $('input[name=roomID').val()
+    playerName_ = playerName
+    players.push(playerName_)
+    rightGuessString = randWord()
     console.log(playerName, roomID, rightGuessString)
-    socket.emit('joinGame',{
-        name:playerName,
-        roomID:roomID,
-        word: rightGuessString,
-    });
-    $("#container").hide()
+    socket.emit('joinGame', {
+      name: playerName,
+      roomID: roomID,
+      word: rightGuessString
+    })
+    $('#container').hide()
   }
 })
 
-//this displays the game after player three has jounined
-socket.on("IJoined_",(data)=>{
-  $("#container").hide()
-  $("#objects").show();
+// this displays the game after player three has jounined
+socket.on('IJoined_', (data) => {
+  $('#container').hide()
+  $('#objects').show()
 })
 
-socket.on("Joined_",()=>{
-  $("#container").hide()
-  $("#objects").show();
+socket.on('Joined_', () => {
+  $('#container').hide()
+  $('#objects').show()
 })
 
-//color the keyBoard of the opponent colour_board
-socket.on('color_board2', (data)=>{
-  console.log(data.rightGuessString);
+// color the keyBoard of the opponent colour_board
+socket.on('color_board2', (data) => {
+  console.log(data.rightGuessString)
   console.log(data.opponentGuess, data.guessesRemaining_)
   const row = document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_]
   const rightGuess = Array.from(rightGuessString)
-  for (let i=0; i<5; i++)
-  {
+  for (let i = 0; i < 5; i++) {
     const box = row.children[i]
-    let opponentGuess = data.opponentGuess;
+    const opponentGuess = data.opponentGuess
     let letterColor = ''
     box.className = 'letter-box2'
     const letter = opponentGuess[i]
@@ -117,23 +112,21 @@ socket.on('color_board2', (data)=>{
       box.style.backgroundColor = letterColor
       shadeKeyBoard(letter, letterColor)
     }, delay)
-
   }
 })
 
-
-//opponent winning message
-socket.on("won-message", (data)=>{
-  toastr.error(`${data.name} has got the correct word`, 'Game Over!!:',`The correct word is ${rightGuessString}`,{timeOut: 9000})
-    setTimeout(function(){
-      toastr.error(`The correct word is ${rightGuessString}`,{timeOut: 90000})}, 3000)           
-    })
-
-//opponent lossing message
-socket.on("lost-message", (data)=>{
-  toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
+// opponent winning message
+socket.on('won-message', (data) => {
+  toastr.error(`${data.name} has got the correct word`, 'Game Over!!:', `The correct word is ${rightGuessString}`, { timeOut: 9000 })
+  setTimeout(function () {
+    toastr.error(`The correct word is ${rightGuessString}`, { timeOut: 90000 })
+  }, 3000)
 })
 
+// opponent lossing message
+socket.on('lost-message', (data) => {
+  toastr.info(`${data.name} has ran out of guesses`, { timeOut: 30000 })
+})
 
 /// changing between states
 const gameState = new states()
@@ -145,20 +138,20 @@ if (gameState.getcurrentState() == 'Menu') {
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
-//let rightGuessString = rightGuessString_1 
+// let rightGuessString = rightGuessString_1
 let nextLetter = 0
-let wordLength = 5;
+const wordLength = 5
 // set up the sockets.io
 
-window.onload =function(){
-    initBoard();
-    initBoard_2();
-    GameLoop();
+window.onload = function () {
+  initBoard()
+  initBoard_2()
+  GameLoop()
 }
 
-function randWord(){
-  let word = WORDS[Math.floor(Math.random() * WORDS.length)];
-  return word;
+function randWord () {
+  const word = WORDS[Math.floor(Math.random() * WORDS.length)]
+  return word
 }
 
 function initBoard () {
@@ -194,7 +187,6 @@ function initBoard_2 () {
   }
 }
 
-
 function shadeKeyBoard (letter, color) {
   for (const elem of document.getElementsByClassName('keyboard-button')) {
     if (elem.textContent === letter) {
@@ -213,31 +205,31 @@ function shadeKeyBoard (letter, color) {
   }
 }
 
-function GameLoop(){
+function GameLoop () {
   document.addEventListener('keyup', (e) => {
     if (guessesRemaining === 0) {
       return
     }
-  
+
     const pressedKey = String(e.key)
     if (pressedKey === 'Backspace' && nextLetter !== 0) {
       deleteLetter()
       return
     }
-  
+
     if (pressedKey === 'Enter') {
       checkGuess()
       return
     }
-  
+
     const found = pressedKey.match(/[a-z]/gi)
     if (!found || found.length > 1) {
-  
+
     } else {
       insertLetter(pressedKey)
     }
   })
-  }
+}
 
 function deleteLetter () {
   const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
@@ -253,22 +245,21 @@ function checkGuess () {
   let guessString = ''
   const rightGuess = Array.from(rightGuessString)
 
-
   for (const val of currentGuess) {
     guessString += val
   }
 
   if (guessString.length != 5) {
-    toastr.warning("Not enough letters!",'Warning:',{timeOut: 3000})
+    toastr.warning('Not enough letters!', 'Warning:', { timeOut: 3000 })
     return
   }
 
   if (!WORDS.includes(guessString)) {
-    toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
+    toastr.warning('Word not in guess list!', 'Warning:', { timeOut: 3000 })
     return
   }
 
-  let arrColor = []
+  const arrColor = []
 
   for (let i = 0; i < 5; i++) {
     let letterColor = ''
@@ -311,16 +302,16 @@ function checkGuess () {
     currentGuess: currentGuess,
     colors: arrColor,
     guessesRemaining: guessesRemaining,
-    roomID: roomID,
+    roomID: roomID
   })
 
   if (guessString === rightGuessString) {
-    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
-    socket.emit("won", {
+    toastr.success('You guessed right! Game over!', 'Winner!', { timeOut: 3000 })
+    socket.emit('won', {
       name: playerName_,
-      roomID: roomID,
+      roomID: roomID
     })
-    console.log("won", playerName_, roomID)
+    console.log('won', playerName_, roomID)
     guessesRemaining = 0
   } else {
     guessesRemaining -= 1
@@ -328,17 +319,17 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
-            setTimeout(function(){
-
-              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)  
-              socket.emit("lost", {
-                name: playerName_,
-                roomID: roomID,
-              })          
-            }
+      toastr.error("You've run out of guesses!", 'Game Over!!:', { timeOut: 3000 })
+      setTimeout(function () {
+        toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!', { timeOut: 3000 })
+      }, 3000)
+      socket.emit('lost', {
+        name: playerName_,
+        roomID: roomID
+      })
     }
   }
+}
 
 function insertLetter (pressedKey) {
   if (nextLetter === 5) {
@@ -353,7 +344,6 @@ function insertLetter (pressedKey) {
   box.classList.add('filled-box')
   currentGuess.push(pressedKey)
   nextLetter += 1
-
 }
 
 const animateCSS = (element, animation, prefix = 'animate__') =>
@@ -391,7 +381,7 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
 
-document.getElementById("Enter").addEventListener('click', ()=>{
-  socket.emit("guess1", currentGuess)
+document.getElementById('Enter').addEventListener('click', () => {
+  socket.emit('guess1', currentGuess)
   console.log(currentGuess)
 })
