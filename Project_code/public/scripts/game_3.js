@@ -317,7 +317,6 @@ if (gameState.getcurrentState() == 'Menu') {
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
-//let rightGuessString = rightGuessString_1 
 let nextLetter = 0
 let wordLength = 5;
 // set up the sockets.io
@@ -437,12 +436,12 @@ function deleteLetter () {
   nextLetter -= 1
 }
 
+let arrColor = [];
 function checkGuess () {
-  
+  let guessString = ''
   if (not_playing===false)
   {
   const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
-  let guessString = ''
   const rightGuess = Array.from(rightGuessString)
 
   for (const val of currentGuess) {
@@ -458,8 +457,6 @@ function checkGuess () {
     toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
     return
   }
-
-  let arrColor = []
 
   for (let i = 0; i < 5; i++) {
     let letterColor = ''
