@@ -52,42 +52,35 @@
                         <button class="joinBtn2 btn btn-primary">Join</button>
                     </form>
                 </div>
-
-                <!--<div class="leaderboard">
-                    <div class="player1">
-                        <h4 class="name">
-                            Player1 :                             
-                        </h4>
-                        <span>0</span>
-                        
-                    </div>
-                    <div class="player2">
-                        <h4 class="name">
-                            Player2:                             
-                        </h4>
-                        <span>0</span>
-                    </div>
-                </div>-->
                 <div id="message">
-                    Waiting for other player's choice...
+                    NB: IF YOU WANT TO BE OPPONENT 2 IN THE GAME PLAESE DO NOT JOIN BEFORE PLAYER 1 JOINS
                 </div>
                 <br>  
             </div>
         </div>
     </div>
+
+<div id="word-div">
+    <form onsubmit="return false">                        
+        <input type="text" placeholder="enter word" id="word-set" class="word-set">
+        <button class="submit" id="submit">Submit</button>
+        <button class="cancel" id="cancel">cancel</button>
+    </form>
+</div>
+
+<div id="wait" class="wait">
+    WAITING FOR OTHER PLAYERS DECISION
+</div>
     
 <div class="objects" id="objects">
     <div class="board" id="board">
         <div id="game-board_2" class="game-board_2">
-            <h2 id="opponent1">OPPONENT 1</h2>
         </div>
         <div id="game-board" class="game-board">
-            <h2> PLAYER </h2>
         </div>
         <div id="game-board_3" class="game-board_3">
-            <h2 id="opponent2">OPPONENT 2</h2>
         </div>
-    </div>
+   </div>
     
     <div id="keyboard-cont" class="keyboard">
         <div class="row-1">
@@ -134,14 +127,11 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <button onclick="info()">Info Message </button>
-<button id="word"> correctword </button>
-<button id="restart"> restart </button>
-
-        <script type="text/javascript">
-            function info(){
-                toastr.info('Refresh the webpage to start a new Game?', 'Info:')
-            }
-        </script>
+    <script type="text/javascript">
+        function info(){
+            toastr.info('Refresh the webpage to start a new Game?', 'Info:')
+        }
+    </script>
 </div>
 </body>
 </html>

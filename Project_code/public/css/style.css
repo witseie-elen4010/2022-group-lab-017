@@ -190,3 +190,25 @@ html,body{
   margin: 4vh 1vw;
 }
 
+#message{
+  color: red;
+  background-color: white;
+}
+
+
+#player, #opponent1, #opponent2{
+  position: relative;
+  bottom: 400px;
+  color: RED;
+}
+
+#spectator1{
+  position: relative;
+  bottom: 200px;
+}
+
+#spectator{
+  position: relative;
+  bottom: 200px;
+}
+

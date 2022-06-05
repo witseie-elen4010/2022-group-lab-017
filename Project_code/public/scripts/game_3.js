@@ -5,11 +5,11 @@ import { WORDS } from '/static/public/scripts/words.js'
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
 
-const socket = io.connect('http://localhost:3000')
+const socket = io.connect(`http://localhost:3000`)
 
-let firstPlayer=false;
 let roomID;
 let playerName_;
+let decisions = 0;
 let opponent1={name: "opponent1"};
 let opponent2={name: "opponent2"};
 
@@ -21,29 +21,45 @@ let opponent2={name: "opponent2"};
 
 
 $("#objects").hide();
+$("#word-div").hide();
+$("#wait").hide();
 
+//takes care of the players name
 socket.on("playerName1", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
     console.log(data.roomID)
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
+
+//takes care of the players name
 socket.on("playerName2", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
+
+//takes care of the players name
 socket.on("playerName3", (data)=>{
     playerName_ = data.name
     roomID = data.roomID
-})
-
-socket.emit("opponent", {
-    name: playerName_,
-    roomID: roomID,
+    const board = document.getElementById("game-board")
+    const tag = document.createElement("h2")
+    tag.innerHTML = data.name
+    tag.id = "player"
+    board.appendChild(tag)
 })
 
 //Create Game Event Emitter
 $(".createBtn").click(function(){
-    firstPlayer=true;
     const playerName=$("input[name=p1name").val();
     socket.emit('createGame',{name:playerName});
     console.log(playerName, roomID)
@@ -72,6 +88,9 @@ $(".joinBtn").click(function(){
         name:playerName,
         roomID:roomID,
     });
+    $(".newRoom").hide();
+    $(".joinRoom").hide();
+    $("#message").html("Waiting  opponent 2 to join, room ID is "+ roomID).show();
 })
 
 //Join Game Event Emitter
@@ -86,49 +105,21 @@ $(".joinBtn2").click(function(){
         word: rightGuessString,
     });
     $("#container").hide()
+    $("#word-div").show()
+    $("#wait").hide()
 })
 
-//Player 2 Joined
-socket.on("player2Joined",(data)=>{
-    transition(data);
+//this displays the game after player three has jounined
+socket.on("IJoined",(data)=>{
     $("#container").hide()
-    $("#objects").show();
+    $("#wait").hide();
+    $("#word-div").show();
+    
   })
-
-//player 3 joined
-socket.on("player3Joined",(data)=>{
-    transition(data);
+socket.on("Joined",()=>{
     $("#container").hide()
-    $("#objects").show();
-  })
-
-  
-//Player 1 Joined
-socket.on("player1Joined",(data)=>{
-    transition(data)  ;
-    $("#container").hide()
-    $("#objects").show();
-})
-
-const transition=(data)=>{
-  $(".newRoom").hide();
-  $(".joinRoom").hide();
-  $(".leaderboard").hide();
-  $(".controls").hide();
-  $(".player1 .name").html(data.p1name);
-  $(".player2 .name").html(data.p2name);
-  $(".player3 .name").html(data.p3name);
-  $("#message").html(data.p2name+" is here!").hide();
-  $("#objects").show();
-}
-//Select Choice
-$(".controls button").click(function (){
-  const guess=$(this).html().trim();
-  const guessEvent=firstPlayer?"guess1":"guess2";
-  socket.emit(guessEvent,{
-      guess: guess,
-      roomID:roomID
-  });
+    $("#wait").hide();
+    $("#word-div").show();
 })
 
 //color the keyBoard of the opponent colour_board
@@ -140,12 +131,22 @@ socket.on('color_board', (data)=>{
        opponent1 = {
            name: data.name
        } 
+      const board = document.getElementById("game-board_2")
+      const tag = document.createElement("h2")
+      tag.innerHTML = data.name
+      tag.id = "opponent1";
+      board.appendChild(tag)
     }
     else if (opponent1.name!== data.name && opponent2.name !==data.name)
     {
         opponent2 = {
             name: data.name
         }
+        const board = document.getElementById("game-board_3")
+        const tag = document.createElement("h2")
+        tag.innerHTML = data.name
+        tag.id = "opponent2"
+        board.appendChild(tag)
     }
 
    if (opponent1.name===data.name)
@@ -194,10 +195,8 @@ socket.on('color_board', (data)=>{
       box.style.backgroundColor = letterColor
       shadeKeyBoard(letter, letterColor)
     }, delay)
-
   }
 })
-
 
 //opponent winning message
 socket.on("won-message", (data)=>{
@@ -210,6 +209,95 @@ socket.on("lost-message", (data)=>{
   toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
 })
 
+
+/***********************/
+/*                     */
+/*  WORD FORM          */
+/*  LISTENERS          */
+/***********************/
+
+let not_playing = false;
+
+document.getElementById("cancel").addEventListener('click', ()=>{
+  decisions++;
+  $("#word-div").hide();
+  $("#wait").show();
+  socket.emit("my-decision", {
+    roomID: roomID,
+    decision: 1,
+  })
+  console.log(playerName_)
+  if (decisions===3)
+  {
+    $("#word-div").hide();
+    $("#wait").hide();
+    $("#objects").show();
+  } 
+})
+
+document.getElementById("submit").addEventListener("click", ()=>{
+  if($("#word-set").val().length===5 && WORDS.includes($("#word-set").val())){
+  not_playing = true;
+  socket.emit("play", {
+    roomID: roomID,
+    word: $("#word-set").val(),
+    name: playerName_,
+  });
+  rightGuessString = $("#word-set").val(), 
+  $("#word-div").hide();
+  $("#wait").hide();
+  $("#objects").show();
+  document.getElementById("game-board").style.backgroundColor = "yellow";
+  $("#keyboard-cont").hide();
+  const board = document.getElementById("game-board")
+  const tag = document.createElement("h2")
+  tag.innerHTML = "YOU ARE NOT ALLOWED TO PLAY"
+  tag.id = "spectator"
+  board.appendChild(tag)
+  clearTable();
+  document.getElementsByClassName("keyboard-button").disabled = true;
+  board.disabled = true;
+}
+  else
+  {
+    if ($("#word-set").val().length != 5) {
+      toastr.warning("The word should have 5 letters!", 'warning: ',{timeOut: 3000})
+      return
+    }
+    if (!WORDS.includes($("#word-set").val())) {
+      toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
+      toastr.warning("use lowercase letter if the word exists",'Warning:',{timeOut: 3000})
+      return
+    }
+  }
+})
+
+socket.on('decisions', (data)=>{
+  decisions += data.decision;
+  console.log(playerName_,decisions, data.decision)
+  if (decisions === 3)
+  {
+    $("#word-div").hide();
+    $("#wait").hide();
+    $("#objects").show()
+  }
+})
+
+socket.on('word-set', (data)=>{
+  rightGuessString = data.word;
+  toastr.info(`${data.name} SET THE WORD TO BE GUESSED`, {timeOut: 30000})
+  toastr.info(`HE IS NOT PART OF THE GAME`, {timeOut: 30000}) 
+  opponent1 = data.name;
+  document.getElementById("game-board_2").style.backgroundColor = "yellow";
+  $("#word-div").hide();
+  $("#wait").hide();
+  $("#objects").show();
+  const board = document.getElementById("game-board_2")
+  const tag = document.createElement("h2")
+  tag.innerHTML = data.name + " IS NOT ALLOWED TO PLAY"
+  tag.id = "spectator1"
+  board.appendChild(tag)
+})
 
 
 /********************* */
@@ -228,7 +316,6 @@ if (gameState.getcurrentState() == 'Menu') {
 const NUMBER_OF_GUESSES = 6
 let guessesRemaining = NUMBER_OF_GUESSES
 let currentGuess = []
-//let rightGuessString = rightGuessString_1 
 let nextLetter = 0
 let wordLength = 5;
 // set up the sockets.io
@@ -238,14 +325,6 @@ window.onload =function(){
     initBoard_2();
     initBoard_3();
     GameLoop();
-    resert();
-}
-
-function correct(){
-  var button = document.getElementById("word");
-  button.onclick = function() {
-      toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
-  }
 }
 
 function randWord(){
@@ -356,9 +435,12 @@ function deleteLetter () {
   nextLetter -= 1
 }
 
+let arrColor = [];
 function checkGuess () {
-  const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
   let guessString = ''
+  if (not_playing===false)
+  {
+  const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining]
   const rightGuess = Array.from(rightGuessString)
 
   for (const val of currentGuess) {
@@ -374,8 +456,6 @@ function checkGuess () {
     toastr.warning("Word not in guess list!",'Warning:',{timeOut: 3000})
     return
   }
-
-  let arrColor = []
 
   for (let i = 0; i < 5; i++) {
     let letterColor = ''
@@ -412,9 +492,12 @@ function checkGuess () {
       box.style.backgroundColor = letterColor
       shadeKeyBoard(letter, letterColor)
     }, delay)
+
+  }
   }
 
 
+  //emits guess information
   socket.emit('colors', {
     name: playerName_,
     currentGuess: currentGuess,
@@ -426,7 +509,7 @@ function checkGuess () {
 
 
   if (guessString === rightGuessString) {
-    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 3000})
+    toastr.success("You guessed right! Game over!",'Winner!',{timeOut: 6000})
     socket.emit("won", {
       name: playerName_,
       roomID: roomID,
@@ -438,14 +521,15 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
-      toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
-      setTimeout(function(){
-      toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
-      socket.emit("lost", {
-        name: playerName_,
-        roomID: roomID,
-      })
-     }
+
+            toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 6000})
+            setTimeout(function(){
+              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)     
+              socket.emit("lost", {
+                name: playerName_,
+                roomID: roomID,})
+            }
+
     }
   }
 
