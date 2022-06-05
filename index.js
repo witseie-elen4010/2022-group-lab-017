@@ -117,7 +117,6 @@ io.on('connection', (socket) => {
       })
       
     })
-
     //this part listens to an event when a player has lost
     socket.on("lost", (data)=>{
 
