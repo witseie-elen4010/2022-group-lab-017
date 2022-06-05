@@ -60,9 +60,13 @@ socket.on("playerName3", (data)=>{
 
 //Create Game Event Emitter
 $(".createBtn").click(function(){
+  if($("input[name=p1name").val() !=="")
+  {
     const playerName=$("input[name=p1name").val();
     socket.emit('createGame',{name:playerName});
     console.log(playerName, roomID)
+  }
+    
 })
 
 //get the word to be guessed from the server
@@ -81,6 +85,9 @@ socket.on("newGame",(data)=>{
 
 //Join Game Event Emitter
 $(".joinBtn").click(function(){
+
+  if ($("input[name=p2name").val() !=="" && $("input[name=roomID").val() !== "")
+  {
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
     console.log(playerName, roomID)
@@ -91,10 +98,14 @@ $(".joinBtn").click(function(){
     $(".newRoom").hide();
     $(".joinRoom").hide();
     $("#message").html("Waiting  opponent 2 to join, room ID is "+ roomID).show();
+  }  
 })
 
 //Join Game Event Emitter
 $(".joinBtn2").click(function(){
+
+  if ($("input[name=p3name").val() !=="" && $("input[name=roomID3").val() !=="")
+  {
     const playerName=$("input[name=p3name").val();
     roomID=$("input[name=roomID3").val();
     rightGuessString = randWord();
@@ -107,6 +118,7 @@ $(".joinBtn2").click(function(){
     $("#container").hide()
     $("#word-div").show()
     $("#wait").hide()
+  }
 })
 
 //this displays the game after player three has jounined
@@ -325,8 +337,6 @@ window.onload =function(){
     initBoard_2();
     initBoard_3();
     GameLoop();
-}
-
 }
 
 function randWord(){
