@@ -171,14 +171,6 @@ window.onload =function(){
     initBoard();
     initBoard_2();
     GameLoop();
-    correct();
-}
-
-function correct(){
-  var button = document.getElementById("word");
-  button.onclick = function() {
-      toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
-  }
 }
 
 function randWord(){
