@@ -5,7 +5,7 @@ import { WORDS } from '/static/public/scripts/words.js'
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
 
-const socket = io.connect('http://localhost:3000')
+const socket = io.connect(`http://localhost:3000`)
 
 let roomID;
 let playerName_;
@@ -273,7 +273,6 @@ document.getElementById("submit").addEventListener("click", ()=>{
 })
 
 socket.on('decisions', (data)=>{
-  $("#word-div").hide();
   decisions += data.decision;
   console.log(playerName_,decisions, data.decision)
   if (decisions === 3)
