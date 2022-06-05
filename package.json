@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "1. Ntsemi Bophilo\r 2. Thabang Sean Banyini\r 3. Goodwill Phooko\r 4. Felix Mashingaidze\r 5. Kevin Naidoo",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
