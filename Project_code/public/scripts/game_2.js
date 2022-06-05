@@ -21,6 +21,8 @@ socket.on('word', (data)=>{
 
 //Create Game Event Emitter
 $(".createBtn").click(function(){
+  if($("input[name=p1name").val() !=="")
+  {
     firstPlayer=true;
     const playerName=$("input[name=p1name").val();
     playerName_ = playerName;
@@ -31,6 +33,7 @@ $(".createBtn").click(function(){
       name:playerName,
     });
     console.log(playerName, roomID)
+  }
 })
 
 //New Game Created Listener
@@ -44,6 +47,9 @@ socket.on("newGame",(data)=>{
 
 //Join Game Event Emitter
 $(".joinBtn").click(function(){
+
+  if ($("input[name=p2name").val() !== "" && $("input[name=roomID").val() !== "")
+  {
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
     playerName_ = playerName;
@@ -56,6 +62,7 @@ $(".joinBtn").click(function(){
         word: rightGuessString,
     });
     $("#container").hide()
+  }
 })
 
 //this displays the game after player three has jounined
