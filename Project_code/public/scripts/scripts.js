@@ -253,3 +253,10 @@ function clearTable () {
   }
 }
 
+/********************* */
+/*                     */
+/*ExpotFfunctionsToTest*/
+/*                     */
+/********************* */
+
+module.exports = gameState
