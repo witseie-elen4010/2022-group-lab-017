@@ -140,28 +140,6 @@ window.onload =function(){
     initBoard();
     initBoard_2();
     GameLoop();
-    correct();
-    resert();
-}
-
-function correct(){
-  var button = document.getElementById("word");
-  button.onclick = function() {
-      toastr.info(`The word of the day is: "${rightGuessString}"`, 'Hello Cheater!',{timeOut: 3000})
-  }
-}
-
-function resert(){
-       
-        var button = document.getElementById("restart");
-        button.onclick = function() {
-        rightGuessString = randWord();
-        guessesRemaining = NUMBER_OF_GUESSES;
-        clearTable();
-        nextLetter = 0;
-        currentGuess.length = 0
-        toastr.info('Game restarted!',{timeOut: 3000})
-    }
 }
 
 function randWord(){
@@ -397,21 +375,6 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
 
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
-
-function clearTable(){
-    for(let i=0; i<NUMBER_OF_GUESSES; i++)
-    {
-        let row = document.getElementsByClassName("letter-row")[i]
-    
-        for(let j=0; j<wordLength; j++)
-        {
-            let box = row.children[j]
-            box.textContent = ""
-            box.classList.remove("filled-box")
-            box.style.backgroundColor = ""
-        }
-    }
-}
 
 document.getElementById("Enter").addEventListener('click', ()=>{
   socket.emit("guess1", currentGuess)

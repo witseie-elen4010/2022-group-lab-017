@@ -130,8 +130,7 @@ io.on('connection', (socket) => {
     //this part listens to players events which refused to choose a word to guessed for the three player game
     socket.on("my-decision", (data)=>{
       socket.to(data.roomID).emit("decisions", {decision: data.decision})
-      socket.emit("I-cancel", {ICancel: data.ICancel})
-      console.log(data.decision, data.ICancel)
+      console.log(data.decision)
     })
 
     //this part listens to an event when a player has submitted a word to be guessed

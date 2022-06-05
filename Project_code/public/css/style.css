@@ -202,5 +202,15 @@ html,body{
   color: RED;
 }
 
+#spectator1{
+  position: relative;
+  bottom: 200px;
+}
+
+#spectator{
+  position: relative;
+  bottom: 200px;
+}
+
 
 
