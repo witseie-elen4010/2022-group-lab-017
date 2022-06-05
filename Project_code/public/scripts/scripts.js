@@ -1,4 +1,4 @@
-import { WORDS } from '/static/public/scripts/words.js'
+import { WORDS } from '../scripts/words.js'
 import { states } from '../scripts/gameStates.js'
 
 /// changing between states
@@ -253,3 +253,10 @@ function clearTable () {
   }
 }
 
+/********************* */
+/*                     */
+/*ExpotFfunctionsToTest*/
+/*                     */
+/********************* */
+
+module.exports = gameState

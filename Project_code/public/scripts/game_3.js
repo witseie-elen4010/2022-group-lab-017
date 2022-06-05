@@ -327,6 +327,8 @@ window.onload =function(){
     GameLoop();
 }
 
+}
+
 function randWord(){
   let word = WORDS[Math.floor(Math.random() * WORDS.length)];
   return word;
