@@ -11,12 +11,21 @@ const socket = io.connect('http://localhost:3000')
 
 let firstPlayer=false;
 let roomID;
+let player1;
+let player2;
+let rightword=""
+
+var HistoryData1=[];
+var ExperssionDara1="";
+var HistoryResultsData1="";
+var GameInfo="";
+
 $("#objects").hide();
 
 
 socket.on('word', (data)=>{
   rightGuessString = data.word
-  //console.log(data.word)
+  console.log(data.word)
 })
 
 //Create Game Event Emitter
@@ -24,11 +33,11 @@ $(".createBtn").click(function(){
     firstPlayer=true;
     const playerName=$("input[name=p1name").val();
     playerName_ = playerName;
+    player1 = playerName;
     players.push(playerName);
     socket.emit('createGame',{
       name:playerName,
     });
-   // console.log(playerName, roomID)
 })
 
 //New Game Created Listener
@@ -37,6 +46,7 @@ socket.on("newGame",(data)=>{
     $(".joinRoom").hide();
     $("#message").html("Waiting for player 2, room ID is "+data.roomID).show();
     roomID=data.roomID;
+    console.log(roomID)
 })
 
 //Join Game Event Emitter
@@ -44,9 +54,11 @@ $(".joinBtn").click(function(){
     const playerName=$("input[name=p2name").val();
     roomID=$("input[name=roomID").val();
     playerName_ = playerName;
+    player2 = playerName;
     players.push(playerName_);
     rightGuessString = randWord();
-    //console.log(playerName, roomID, rightGuessString)
+    rightword=rightGuessString;
+    console.log(playerName, roomID, rightGuessString)
     socket.emit('joinGame',{
         name:playerName,
         roomID:roomID,
@@ -165,10 +177,17 @@ let wordLength = 5;
 // set up the sockets.io
 
 window.onload =function(){
+    createPlayerInfo();
     initBoard();
     initBoard_2();
     GameLoop();
     correct();
+}
+
+function createPlayerInfo()
+{
+   GameInfo += player1 + " against " + player2 + " in roomID " + roomID;
+   console.log(GameInfo);
 }
 
 function correct(){

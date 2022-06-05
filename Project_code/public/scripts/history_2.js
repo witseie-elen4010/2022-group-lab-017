@@ -1,3 +1,6 @@
+import { states } from '../scripts/gameStates.js'
+import { WORDS } from '/static/public/scripts/words.js'
+
 const socket = io.connect('http://localhost:3000')
 
 var path = require('path');

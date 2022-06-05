@@ -1,4 +1,3 @@
-
 const mainRouter = require('./Project_code/Backend/Routes/mainRoutes')
 const userAccountRouter = require('./Project_code/Backend/Routes/userAccount')
 const bcrypt = require('bcrypt')
@@ -41,7 +40,7 @@ io.on('connection', (socket) => {
     socket.on("createGame",(data)=>{
         const roomID=randomstring.generate({length: 4});    
         socket.join(roomID); 
-        //console.log(data.name, roomID)       
+        ///console.log(data.name, roomID)       
         players[roomID]=data.name;
         //rightGuessString = data.word
         socket.emit("newGame",{
@@ -108,7 +107,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('colors', (data)=>{
-      //console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      ///console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
@@ -117,7 +116,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('colors2', (data)=>{
-      //console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      ///console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
       socket.to(data.roomID).emit('color_board2', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
@@ -140,5 +139,5 @@ io.on('connection', (socket) => {
 })
 
 server.listen(3000, () => {
-  //console.log(' server listening on *:3000')
+  console.log(' server listening on *:3000')
 })
