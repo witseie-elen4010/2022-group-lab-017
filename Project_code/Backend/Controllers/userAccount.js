@@ -1,5 +1,6 @@
 const db = require('../Configs/db')
 const bcrypt = require('bcryptjs')
+//const WORDS = require('../../public/scripts/words.js')
 
 
 exports.createAccount = (req, res, next) => {
@@ -30,6 +31,7 @@ exports.createAccount = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
+  //populateWordDatabase()
     const user = {
       userName: req.body.user_email,
       password: req.body.user_password
@@ -103,3 +105,16 @@ exports.logout = (req, res, next) => {
   res.clearCookie('user')
   res.redirect('/')
 }
+
+/*function populateWordDatabase(){
+  for(let i = 0; i < WORDS.length();i++ )
+  {
+    let word = WORDS[i];
+    db.pools
+            .then((pool) => {
+              return pool.request()
+                .input('word', db.sql.Char, word)
+                .query('INSERT INTO Words (Word) VALUES (@word)')
+            })
+  }
+}*/
