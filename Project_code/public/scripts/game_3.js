@@ -521,6 +521,7 @@ function checkGuess () {
     nextLetter = 0
 
     if (guessesRemaining === 0) {
+
             toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 6000})
             setTimeout(function(){
               toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)     
@@ -528,7 +529,7 @@ function checkGuess () {
                 name: playerName_,
                 roomID: roomID,})
             }
-            
+
     }
   }
 

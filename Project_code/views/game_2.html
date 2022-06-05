@@ -54,10 +54,10 @@
 <div class="objects" id="objects">
     <div class="board_" id="board_">
         <div id="game-board_" class="game-board_">
-            <h2> PLAYER </h2>
+            <h2 id="player">Player</h2>
         </div>
         <div id="game-board_2_" class="game-board_2_">
-            <h2> OPPONENT </h2>
+            <h2 id="opponet">opponet </h2>
     
         </div>
     </div>
@@ -107,6 +107,7 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <button onclick="info()">Info Message </button>
+
         <script type="text/javascript">
             function info(){
                 toastr.info('Refresh the webpage to start a new Game?', 'Info:')
