@@ -215,12 +215,28 @@ socket.on("lost-message", (data)=>{
 /***********************/
 
 document.getElementById("cancel").addEventListener('click', ()=>{
+  decisions++;
+  console.log("***", decisions)
+  ICancel= true;
   $("#word-div").hide();
   $("#wait").show();
   socket.emit("my-decision", {
     roomID: roomID,
     decision: 1,
+    ICancel: true,
   })
+  console.log(playerName_)
+  if (decisions===3)
+  {
+    $("#word-div").hide();
+    $("#wait").hide();
+    $("#objects").show();
+  } 
+})
+
+socket.on("I-cancel", (data)=>{
+  ICancel = data.ICancel
+  console.log(ICancel)
 })
 
 document.getElementById("submit").addEventListener("click", ()=>{
@@ -240,7 +256,8 @@ document.getElementById("submit").addEventListener("click", ()=>{
 socket.on('decisions', (data)=>{
   decisions += data.decision;
   console.log(playerName_,decisions, data.decision)
-  if (decisions === 2)
+  console.log(ICancel)
+  if (decisions === 3)
   {
     $("#word-div").hide();
     $("#wait").hide();
@@ -250,15 +267,6 @@ socket.on('decisions', (data)=>{
       roomID: roomID,
     })
   }
-})
-
-socket.on("play-game", (data)=>{
-  if (data.decision===2)
-  {
-    $("#word-div").hide();
-    $("#wait").hide();
-    $("#objects").show();
-  } 
 })
 
 socket.on('word-set', (data)=>{
