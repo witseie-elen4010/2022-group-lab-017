@@ -58,39 +58,15 @@ $(".joinBtn").click(function(){
     $("#container").hide()
 })
 
-//Player 2 Joined
-socket.on("player2Joined",(data)=>{
-    transition(data)  ;
-    $("#container").hide()
-    $("#objects").show();
-  })
-  
-//Player 1 Joined
-socket.on("player1Joined",(data)=>{
-    transition(data)  ;
-    $("#container").hide()
-    $("#objects").show();
+//this displays the game after player three has jounined
+socket.on("IJoined_",(data)=>{
+  $("#container").hide()
+  $("#objects").show();
 })
 
-const transition=(data)=>{
-  $(".newRoom").hide();
-  $(".joinRoom").hide();
-  $(".leaderboard").hide();
-  $(".controls").hide();
-  $(".player1 .name").html(data.p1name);
-  $(".player2 .name").html(data.p2name);
-  $("#message").html(data.p2name+" is here!").hide();
+socket.on("Joined_",()=>{
+  $("#container").hide()
   $("#objects").show();
-}
-
-//Select Choice
-$(".controls button").click(function (){
-  const guess=$(this).html().trim();
-  const guessEvent=firstPlayer?"guess1":"guess2";
-  socket.emit(guessEvent,{
-      guess: guess,
-      roomID:roomID
-  });
 })
 
 //color the keyBoard of the opponent colour_board
@@ -347,13 +323,13 @@ function checkGuess () {
     if (guessesRemaining === 0) {
             toastr.error("You've run out of guesses!", 'Game Over!!:',{timeOut: 3000})
             setTimeout(function(){
-            toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)            
-            socket.emit("lost", {
-              name: playerName_,
-              roomID: roomID,
-            })
-        }
 
+              toastr.info(`The right word was: "${rightGuessString}"`, 'Word of the day!',{timeOut: 3000})}, 3000)  
+              socket.emit("lost", {
+                name: playerName_,
+                roomID: roomID,
+              })          
+            }
     }
   }
 
@@ -407,21 +383,6 @@ document.getElementById('keyboard-cont').addEventListener('click', (e) => {
 
   document.dispatchEvent(new KeyboardEvent('keyup', { key: key }))
 })
-
-function clearTable(){
-    for(let i=0; i<NUMBER_OF_GUESSES; i++)
-    {
-        let row = document.getElementsByClassName("letter-row")[i]
-    
-        for(let j=0; j<wordLength; j++)
-        {
-            let box = row.children[j]
-            box.textContent = ""
-            box.classList.remove("filled-box")
-            box.style.backgroundColor = ""
-        }
-    }
-}
 
 document.getElementById("Enter").addEventListener('click', ()=>{
   socket.emit("guess1", currentGuess)
