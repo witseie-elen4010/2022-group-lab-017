@@ -4,7 +4,7 @@
   "description": "1. Ntsemi Bophilo\r 2. Thabang Sean Banyini\r 3. Goodwill Phooko\r 4. Felix Mashingaidze\r 5. Kevin Naidoo",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
