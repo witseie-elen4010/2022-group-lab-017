@@ -42,7 +42,7 @@ exports.login = (req, res, next) => {
           .query('SELECT * FROM Users WHERE Email = @userEmail')
       })
       .then(result => {
-        console.log(result)
+        
         if (result.recordset.length === 0) {
           const alert = 'Username entered does not exist'
           console.log("User does not exist")
