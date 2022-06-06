@@ -1,7 +1,7 @@
 
 import { states } from '../scripts/gameStates.js'
 import { WORDS } from '/static/public/scripts/words.js'
-const db = require('../../Backend/Configs/db.js')
+//const db = require('../../Backend/Configs/db.js')
 
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
