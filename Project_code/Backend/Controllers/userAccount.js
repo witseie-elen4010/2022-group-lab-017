@@ -36,6 +36,7 @@ exports.login = (req, res, next) => {
       userName: req.body.user_email,
       password: req.body.user_password
     }
+    console.log(user.password)
     db.pools
       .then((pool) => {
         return pool.request()
@@ -44,7 +45,7 @@ exports.login = (req, res, next) => {
           .query('SELECT * FROM Users WHERE Email = @userEmail')
       })
       .then(result => {
-        console.log(result)
+        
         if (result.recordset.length === 0) {
           const alert = 'Username entered does not exist'
           console.log("User does not exist")
@@ -64,7 +65,7 @@ exports.login = (req, res, next) => {
               bcrypt.compare(user.password, userPassword).then(function (bcryptResult){
                 if (!bcryptResult) {
                   const alert = 'Username entered does not exist'
-                  console.log(alert)
+                  
                 } else {
                       const userID = result.recordset[0].Personid.toString()
                       const userIdName = userID + user.userName
