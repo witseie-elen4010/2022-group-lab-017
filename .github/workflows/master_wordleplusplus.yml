@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'wordleplusplus'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9C0521A6E9084F13A558620C793FA1BE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3C7E7CCDC0574532B24062B35A6A4BA0 }}
           package: .
