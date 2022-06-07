@@ -212,3 +212,17 @@ html,body{
   bottom: 200px;
 }
 
+table{
+  width: 400px;
+  background-color: yellow;
+  border: 1px solid blue;
+}
+th{
+  text-align: left;
+}
+
+#hide, #log-btn{
+  position: relative;
+  right: 700px;
+}
+

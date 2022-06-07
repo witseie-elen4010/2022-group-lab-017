@@ -12,6 +12,9 @@ const socket = io();
 let firstPlayer=false;
 let roomID;
 $("#objects").hide();
+$('#log-div').hide();
+$('#objects2').hide();
+
 
 
 socket.on('word', (data)=>{
@@ -69,11 +72,15 @@ $(".joinBtn").click(function(){
 socket.on("IJoined_",(data)=>{
   $("#container").hide()
   $("#objects").show();
+  $('#log-div').hide();
+  $('#objects2').show();
 })
 
 socket.on("Joined_",()=>{
   $("#container").hide()
   $("#objects").show();
+  $('#log-div').hide();
+  $('#objects2').show();
 })
 
 //color the keyBoard of the opponent colour_board
@@ -82,6 +89,30 @@ socket.on('color_board2', (data)=>{
   console.log(data.opponentGuess, data.guessesRemaining_)
   const row = document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_]
   const rightGuess = Array.from(rightGuessString)
+
+
+  const table = document.getElementById("log")
+  const tr = document.createElement("tr");
+  const t1 = document.createElement("th");
+  const t2 = document.createElement("th");
+  const t3 = document.createElement("th");
+  const t4 = document.createElement("th");
+
+  t1.textContent = data.name;
+  t2.textContent = "Guess";
+  t3.textContent = data.date;
+  t4.textContent = data.time;
+
+  tr.appendChild(t1);
+  tr.appendChild(t2);
+  tr.appendChild(t3);
+  tr.appendChild(t4);
+
+  table.appendChild(tr);
+
+ console.log(data.time, data.date)
+
+
   for (let i=0; i<5; i++)
   {
     const box = row.children[i]
@@ -132,6 +163,16 @@ socket.on("won-message", (data)=>{
 //opponent lossing message
 socket.on("lost-message", (data)=>{
   toastr.info(`${data.name} has ran out of guesses`, {timeOut: 30000})
+})
+
+document.getElementById("log-btn").addEventListener('click', ()=>{
+  $("#log-div").show();
+  $("#objects").hide();
+})
+
+document.getElementById("hide").addEventListener('click', ()=>{
+  $("#log-div").hide();
+  $("#objects").show();
 })
 
 
@@ -307,11 +348,18 @@ function checkGuess () {
     }, delay)
   }
 
+  let date_ = new Date();
+  let date_str = `${date_.getFullYear()}/${date_.getMonth()+1}/${date_.getDate()}`
+  let time_str = `${date_.getHours()}:${date_.getMinutes()}:${date_.getSeconds()}`
+  console.log(date_str, time_str, playerName_)
   socket.emit('colors2', {
     currentGuess: currentGuess,
     colors: arrColor,
     guessesRemaining: guessesRemaining,
     roomID: roomID,
+    date: date_str,
+    time: time_str,
+    name: playerName_,
   })
 
   if (guessString === rightGuessString) {

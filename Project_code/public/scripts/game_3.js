@@ -23,6 +23,8 @@ let opponent2={name: "opponent2"};
 
 $("#objects").hide();
 $("#word-div").hide();
+$('#log-div').hide();
+$('#objects2').show();
 $("#wait").hide();
 
 //takes care of the players name
@@ -137,6 +139,29 @@ socket.on("Joined",()=>{
 
 //color the keyBoard of the opponent colour_board
 socket.on('color_board', (data)=>{
+
+  const table = document.getElementById("log")
+  const tr = document.createElement("tr");
+  const t1 = document.createElement("th");
+  const t2 = document.createElement("th");
+  const t3 = document.createElement("th");
+  const t4 = document.createElement("th");
+
+  t1.textContent = data.name;
+  t2.textContent = "Guess";
+  t3.textContent = data.date;
+  t4.textContent = data.time;
+
+  tr.appendChild(t1);
+  tr.appendChild(t2);
+  tr.appendChild(t3);
+  tr.appendChild(t4);
+
+  table.appendChild(tr);
+
+ console.log(data.time, data.date)
+
+
     let row; //=document.getElementsByClassName('letter-row2')[6 - data.guessesRemaining_];
 
     if (opponent1.name === "opponent1")
@@ -270,6 +295,7 @@ document.getElementById("submit").addEventListener("click", ()=>{
   clearTable();
   document.getElementsByClassName("keyboard-button").disabled = true;
   board.disabled = true;
+  $("objects2").show();
 }
   else
   {
@@ -292,7 +318,8 @@ socket.on('decisions', (data)=>{
   {
     $("#word-div").hide();
     $("#wait").hide();
-    $("#objects").show()
+    $("#objects").show();
+    $("objects2").show();
   }
 })
 
@@ -305,11 +332,22 @@ socket.on('word-set', (data)=>{
   $("#word-div").hide();
   $("#wait").hide();
   $("#objects").show();
+  $('#objects2').show();
   const board = document.getElementById("game-board_2")
   const tag = document.createElement("h2")
   tag.innerHTML = data.name + " IS NOT ALLOWED TO PLAY"
   tag.id = "spectator1"
   board.appendChild(tag)
+})
+
+document.getElementById("log-btn").addEventListener('click', ()=>{
+  $("#log-div").show();
+  $("#objects").hide();
+})
+
+document.getElementById("hide").addEventListener('click', ()=>{
+  $("#log-div").hide();
+  $("#objects").show();
 })
 
 
@@ -342,7 +380,7 @@ window.onload =function(){
 
 function randWord(){
   let word = WORDS[Math.floor(Math.random() * WORDS.length)];
-  fetchWordDatabase();
+  //fetchWordDatabase();
   return word;
 }
 
@@ -537,6 +575,10 @@ function checkGuess () {
   }
 
 
+  let date_ = new Date();
+  let date_str = `${date_.getFullYear()}/${date_.getMonth()+1}/${date_.getDate()}`
+  let time_str = `${date_.getHours()}:${date_.getMinutes()}:${date_.getSeconds()}`
+  console.log(date_str, time_str, playerName_)
   //emits guess information
   socket.emit('colors', {
     name: playerName_,
@@ -544,6 +586,8 @@ function checkGuess () {
     colors: arrColor,
     guessesRemaining: guessesRemaining,
     roomID: roomID,
+    date: date_str,
+    time: time_str,
   })
 
 
