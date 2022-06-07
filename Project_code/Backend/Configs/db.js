@@ -2,7 +2,7 @@ const mssql = require('mssql')
 // Make sure this is private to this module
 const config = {
 server: 'wordleplusplusdb.database.windows.net',
-database: 'WordlePlusPlus-Database',
+database: 'wordleplusplusdb',
 // Put login details in environment variables for security
 // We don't want to accidently push these to our GitHub repo
 // AzureDBAdmin stores the DB server admin's user name
