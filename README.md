@@ -3,6 +3,8 @@
 
 ##  Name of Application: Wordle++ 
 
+##  Wordle++ Website URL: http://wordleplusplus2.azurewebsites.net
+
 ##  Group Members
  
 1. Ntsemi Bophilo
