@@ -6,7 +6,7 @@ import { WORDS } from '/static/public/scripts/words.js'
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
 
-const socket = io.connect(`http://localhost:3000`)
+const socket = io.connect(`https://localhost:3000`)
 
 let roomID;
 let playerName_;
