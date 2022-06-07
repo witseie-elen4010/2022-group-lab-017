@@ -13,7 +13,6 @@
     <script src="/socket.io/socket.io.js"></script>
 
 </head>
-<body>
     <h1> Wordle Game </h1>
 
 
@@ -67,6 +66,22 @@
 <div id="wait" class="wait">
     WAITING FOR OTHER PLAYERS DECISION
 </div>
+
+<div id="log-div" class="log-div">
+    <table id="log" class="log">
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </table>
+  </div>
+    
+  <div id="objects2" class="objects2">
+    <button id="hide" class="hide">close</button>
+    <button id="log-btn" class="log-btn">Log</button>
+</div> 
     
 <div class="objects" id="objects">
     <div class="board" id="board">

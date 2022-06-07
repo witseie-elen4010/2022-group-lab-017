@@ -86,24 +86,29 @@ io.on('connection', (socket) => {
 
     //this part listens to an event when a player has made a guess for the the two player game
     socket.on('colors', (data)=>{
-      console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+      console.log(data.name, data.roomID, data.colors, data.currentGuess, data.guessesRemaining, data.time, data.date)
 
       //emits an event to all clients in room with iD = roomID
       socket.to(data.roomID).emit('color_board', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
         name: data.name,
+        date: data.time,
+        time: data.date,
       })
     })
 
     //this part listens to an event when a player has made a guess for the the two player game
     socket.on('colors2', (data)=>{
-    console.log(data.roomID, data.colors, data.currentGuess, data.guessesRemaining)
+    console.log(data.roomID, data.colors, data.currentGuess, data.guessesRemaining, data.time, data.date)
 
     //emits an event to all clients in room with iD = roomID
       socket.to(data.roomID).emit('color_board2', {
         opponentGuess: data.currentGuess,
         guessesRemaining_: data.guessesRemaining,
+        name: data.name,
+        date: data.time,
+        time: data.date,
       })
     })
 
