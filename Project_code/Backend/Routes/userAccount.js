@@ -31,8 +31,83 @@ router.post('/register', (req,res) =>{
     res.redirect('/')
 })
 
-//userController.createAccount);
-//router.post('/login', userController.login);
-//router.post('/logout', userController.logout);
+
+router.post('/login', (req,res)=>{
+    const user = {
+        userName: req.body.user_email,
+        password: req.body.user_password
+      }
+      console.log(user.password)
+      db.pools
+        .then((pool) => {
+          return pool.request()
+            // Check if username entered exists in the database
+            .input('userEmail', db.sql.Char, user.userName)
+            .query('SELECT * FROM Users WHERE Email = @userEmail')
+        })
+        .then(result => {
+          
+          if (result.recordset.length === 0) {
+            const alert = 'Username entered does not exist'
+            console.log("User does not exist")
+            res.redirect('/')
+          } else {
+            db.pools
+              .then((pool) => {
+                return pool.request()
+                  // Extract database password to compare with login password
+                  .input('userEmail', db.sql.Char, user.userName)
+                  .query('SELECT * FROM Users WHERE Email = @userEmail')
+              })
+              .then(result => {
+                let userPassword = result.recordset[0].User_Password
+                userPassword = userPassword.split(' ').join('')
+                // Compare login hashed password with database hashed password
+                bcrypt.compare(user.password, userPassword).then(function (bcryptResult){
+                  if (!bcryptResult) {
+                    const alert = 'Username entered does not exist'
+                    res.redirect('/')
+                  } else {
+                        const userID = result.recordset[0].Personid.toString()
+                        const userIdName = userID + user.userName
+                        const randomCharacter = 'qwerty'
+                        res.cookie('user', { username: user.userName, userId: userID }, {
+                           maxAge: 60000 * 60 * 24, // cookie duration is one day
+                           httpOnly: false,
+                           secure: false
+                      })
+                        console.log('login successfull')
+                        db.pools
+                        .then((pool) => {
+                          const online_status = 'Online'
+                          return pool.request()
+                            .input('Online_Status', db.sql.Char, online_status)
+                            .input('userEmail', db.sql.Char, user.userName)
+                            .query('UPDATE Users SET Online_Status = @Online_Status WHERE Email = @userEmail')
+                        })
+                        res.redirect('/main_menu')
+                        console.log('redirecting to homepage')
+                      }
+                  })
+              })
+          }
+    })
+})
+
+router.post('/logout', (req,res)=>{
+  const userID = req.cookies.user.userId
+  db.pools
+  .then((pool) => {
+    const online_status = 'Offline'
+    return pool.request()
+      .input('Online_Status', db.sql.Char, online_status)
+      .input('User_Id', db.sql.Char, userID)
+      .query('UPDATE Users SET Online_Status = @Online_Status WHERE Personid = @User_Id')
+  })
+
+  res.clearCookie('user')
+  res.redirect('/')
+})
+
 
 module.exports = router
