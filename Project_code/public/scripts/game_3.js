@@ -644,3 +644,4 @@ document.getElementById("Enter").addEventListener('click', ()=>{
   socket.emit("guess1", currentGuess)
   console.log(currentGuess)
 })
+//last commit 
