@@ -2,6 +2,7 @@
 import { states } from '../scripts/gameStates.js'
 import { WORDS } from '/static/public/scripts/words.js'
 
+
 //let rightGuessString_1 = randWord();
 let rightGuessString = ""
 
@@ -341,9 +342,36 @@ window.onload =function(){
 
 function randWord(){
   let word = WORDS[Math.floor(Math.random() * WORDS.length)];
+  fetchWordDatabase();
   return word;
 }
 
+/*function fetchWordDatabase(){
+  db.pools
+  .then((pool) => {
+    return pool.request()
+      .query('SELECT COUNT(*) from Users')
+  })
+  .then(result => {
+    console.log(result)
+    console.log(typeof result)
+  })
+  //return word;
+}*/
+/*
+function populateWordDatabase(){
+  for(let i = 0; i < WORDS.length();i++ )
+  {
+    let word = WORDS[i];
+    db.pools
+            .then((pool) => {
+              return pool.request()
+                .input('word', db.sql.Char, word)
+                .query('INSERT INTO Words (Word) VALUES (@word)')
+            })
+  }
+}
+*/
 function initBoard () {
   const board = document.getElementById('game-board')
 
